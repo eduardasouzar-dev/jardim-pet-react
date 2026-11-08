@@ -1,0 +1,80 @@
+
+:root {
+  /* Base */
+  --color-background: #F8F3E8;
+  --color-cream: #F8F3E8;
+  --color-white: #FFFFFF;
+
+  /* Verdes e tons naturais */
+  --color-sage: #C3C69D;
+  --color-light-sage: #EEEBDD;
+  --color-forest: #7E8755;
+  --color-dark-green: #756C4E;
+  --color-natural-olive: #A6AD76;
+
+  /* Tons quentes */
+  --color-terracotta: #D18A43;
+  --color-orange: #D99A62;
+  --color-yellow: #E7C987;
+  --color-peach: #F1E3CD;
+
+  /* Textos e detalhes */
+  --color-text: #514C3C;
+  --color-muted: #827B68;
+  --color-border: #DDD8C9;
+
+  /* Compatibilidade com nomes antigos */
+  --verde: var(--color-forest);
+  --verde-escuro: var(--color-dark-green);
+  --verde-claro: var(--color-sage);
+  --creme: var(--color-cream);
+  --terracota: var(--color-terracotta);
+  --terracota-escuro: #B96F32;
+
+  /* Tipografia */
+  --font-heading: Georgia, serif;
+  --font-body: Arial, sans-serif;
+
+  /* Acabamentos */
+  --shadow-soft: 0 4px 16px rgba(81, 76, 60, 0.08);
+  --shadow-medium: 0 8px 24px rgba(81, 76, 60, 0.12);
+
+  --radius-small: 8px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}

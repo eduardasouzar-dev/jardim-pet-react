@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Serif+Display:ital@0;1&family=Nunito+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  font-family: 'Nunito Sans', sans-serif;
+  color: #3F3A2A;
+  background-color: #F8F3E8;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Verdes */
+  --color-forest: #4F7A33;       /* verde-folha: botões e ações */
+  --color-dark-green: #3F3A2A;   /* texto principal (marrom-oliva escuro) */
+  --color-sage: #8FB38B;
+  --color-light-sage: #DDE7D6;
+
+  /* Marfim e areia */
+  --color-cream: #F8F3E8;
+  --color-sand: #EBE0CA;
+  --color-peach: #F1E3CD;
+
+  /* Tons quentes */
+  --color-orange: #F2A068;
+  --color-terracotta: #B85A25;   /* laranja queimado */
+  --color-yellow: #E8C76A;
+
+  /* Textos e divisórias */
+  --color-muted: #5F5740;
+  --color-border: #D8C9A8;
+
+  --font-heading: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Nunito Sans', sans-serif;
+
+  font-optical-sizing: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+p {
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button,
+input,
+textarea,
+select {
+  font-size: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+#root {
+  min-height: 100vh;
+}

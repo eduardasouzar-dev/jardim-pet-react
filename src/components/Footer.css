@@ -1,0 +1,475 @@
+
+/* ========================================
+   HEADER - JARDIM PET
+======================================== */
+
+.site-header {
+  position: relative;
+  z-index: 100;
+  width: 100%;
+  background: #F8F3E8;
+  box-shadow: 0 5px 22px rgba(47, 79, 53, 0.07);
+}
+
+/* ========================================
+   FAIXA SUPERIOR
+======================================== */
+
+.header-topbar {
+  width: 100%;
+  min-height: 34px;
+  background: #2F4F35;
+  color: #F8F3E8;
+}
+
+.header-topbar-inner {
+  width: min(100% - 64px, 1320px);
+  min-height: 34px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.topbar-message {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.35px;
+  opacity: 0.95;
+}
+
+.topbar-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #D9E1C5;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.topbar-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #D18A43;
+  box-shadow: 0 0 8px rgba(209, 138, 67, 0.65);
+}
+
+/* ========================================
+   ÁREA PRINCIPAL
+======================================== */
+
+.header-main {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgba(195, 198, 157, 0.17),
+      transparent 38%
+    ),
+    #F8F3E8;
+  border-bottom: 1px solid rgba(117, 108, 78, 0.16);
+}
+
+.header-main-inner {
+  width: min(100% - 64px, 1320px);
+  min-height: 108px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 44px;
+}
+
+/* ========================================
+   MARCA
+======================================== */
+
+.header-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 0;
+  gap: 1px;
+  text-decoration: none;
+  transition: transform 0.25s ease;
+}
+
+.header-brand:hover {
+  transform: translateY(-2px);
+}
+
+.brand-name {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-heading, Georgia, serif);
+  font-size: 39px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.site-header .brand-jardim {
+  color: #2F4F35;
+}
+
+.site-header .brand-pet {
+  color: #8DAA61;
+}
+
+.site-header .brand-period {
+  color: #D18A43;
+}
+
+.brand-kicker {
+  margin-top: 5px;
+  padding-left: 3px;
+  color: #756C4E;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+/* ========================================
+   NAVEGAÇÃO
+======================================== */
+
+.header-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(17px, 2.2vw, 34px);
+}
+
+.header-navigation a {
+  position: relative;
+  padding: 12px 0;
+  color: #3D5139;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.header-navigation a::after {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 2px;
+  border-radius: 5px;
+  background: #8DAA61;
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.header-navigation a:hover,
+.header-navigation a.active {
+  color: #78934F;
+}
+
+.header-navigation a:hover::after,
+.header-navigation a.active::after {
+  transform: scaleX(1);
+}
+
+/* ========================================
+   AÇÕES DA DIREITA
+======================================== */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 17px;
+}
+
+.header-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #2F4F35;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.header-cart:hover,
+.header-cart.active {
+  color: #78934F;
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 23px;
+  padding: 0 6px;
+  border-radius: 50%;
+  background: #8DAA61;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.header-action-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(117, 108, 78, 0.25);
+}
+
+/* ========================================
+   CONTA
+======================================== */
+
+.header-account {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-login {
+  color: #2F4F35;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.header-login:hover,
+.header-login.active {
+  color: #8DAA61;
+}
+
+.header-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 41px;
+  padding: 0 19px;
+  border-radius: 5px;
+  background: #2F4F35;
+  color: #F8F3E8;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(47, 79, 53, 0.13);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.header-register:hover {
+  background: #78934F;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(47, 79, 53, 0.18);
+}
+
+/* ========================================
+   USUÁRIO LOGADO
+======================================== */
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-greeting {
+  max-width: 125px;
+  overflow: hidden;
+  color: #756C4E;
+  font-size: 12px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-logout {
+  padding: 9px 13px;
+  border: 1px solid rgba(117, 108, 78, 0.35);
+  border-radius: 5px;
+  background: transparent;
+  color: #2F4F35;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-logout:hover {
+  border-color: #8DAA61;
+  background: rgba(141, 170, 97, 0.12);
+}
+
+/* ========================================
+   TABLETS
+======================================== */
+
+@media (max-width: 1100px) {
+  .header-main-inner {
+    column-gap: 25px;
+  }
+
+  .header-navigation {
+    gap: 17px;
+  }
+
+  .header-navigation a {
+    font-size: 12px;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .header-account {
+    gap: 10px;
+  }
+
+  .header-register {
+    padding: 0 13px;
+  }
+}
+
+@media (max-width: 900px) {
+  .header-main-inner {
+    grid-template-columns: 1fr auto;
+    row-gap: 12px;
+    padding-top: 19px;
+    padding-bottom: 17px;
+  }
+
+  .header-navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 30px;
+    padding-top: 7px;
+    border-top: 1px solid rgba(117, 108, 78, 0.15);
+  }
+
+  .header-navigation a {
+    padding: 8px 0;
+  }
+}
+
+/* ========================================
+   CELULARES
+======================================== */
+
+@media (max-width: 560px) {
+  .header-topbar-inner,
+  .header-main-inner {
+    width: min(100% - 32px, 480px);
+  }
+
+  .header-topbar-inner {
+    justify-content: center;
+  }
+
+  .topbar-detail {
+    display: none;
+  }
+
+  .topbar-message {
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .header-main-inner {
+    column-gap: 10px;
+    row-gap: 16px;
+  }
+
+  .brand-name {
+    font-size: 33px;
+  }
+
+  .brand-kicker {
+    font-size: 8px;
+    letter-spacing: 2.5px;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+
+  .header-action-divider {
+    display: none;
+  }
+
+  .header-cart {
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .header-account {
+    gap: 9px;
+  }
+
+  .header-login {
+    font-size: 11px;
+  }
+
+  .header-register {
+    min-height: 36px;
+    padding: 0 11px;
+    font-size: 10px;
+  }
+
+  .header-navigation {
+    gap: 7px 19px;
+  }
+
+  .header-navigation a {
+    font-size: 11px;
+  }
+
+  .header-user {
+    gap: 7px;
+  }
+
+  .header-greeting {
+    max-width: 75px;
+    font-size: 10px;
+  }
+
+  .header-logout {
+    padding: 8px 9px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-main-inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .header-brand {
+    align-items: center;
+  }
+
+  .header-actions {
+    justify-content: center;
+  }
+
+  .header-navigation {
+    grid-column: 1;
+    grid-row: 3;
+    gap: 6px 16px;
+  }
+}

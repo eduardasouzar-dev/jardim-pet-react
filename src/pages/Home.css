@@ -1,0 +1,455 @@
+
+/* =========================================================
+   HOME — JARDIM PET
+   Identidade: Botanical Contemporary
+   Hero editorial com imagem à direita
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ---------- HERO ---------- */
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(560px, 46vw, 680px);
+  overflow: hidden;
+  isolation: isolate;
+  background: #F8F3E8;
+}
+
+/* Fotografia */
+
+.hero-visual {
+  position: absolute;
+  inset: 0 0 0 auto;
+  z-index: 0;
+  width: 72%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 92% center;
+  transform: scale(1.04);
+}
+
+/* Degradê de integração */
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #F8F3E8 0%,
+    #F8F3E8 32%,
+    rgba(248, 243, 232, 0.96) 43%,
+    rgba(248, 243, 232, 0.78) 55%,
+    rgba(248, 243, 232, 0.30) 65%,
+    rgba(248, 243, 232, 0) 76%
+  );
+}
+
+/* Conteúdo */
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 3rem, 1320px);
+  margin: 0 auto;
+  padding: 5rem 0;
+}
+
+/* Identificação superior */
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  color: #68794B;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 1.8rem;
+  height: 1px;
+  background: #A8905A;
+}
+
+/* Título */
+
+.hero h1 {
+  max-width: 620px;
+  margin: 0;
+  color: #49452F;
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(3.1rem, 5vw, 4.35rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.hero-title-highlight {
+  position: relative;
+  display: inline-block;
+  color: #71834F;
+  font-weight: 400;
+}
+
+.title-leaf {
+  display: inline-block;
+  width: 0.65em;
+  height: 0.65em;
+  margin-left: 0.12em;
+  color: #8A9A62;
+  vertical-align: 0.05em;
+}
+
+/* Texto de apoio */
+
+.hero-description {
+  max-width: 440px;
+  margin: 1.5rem 0 0;
+  color: #655F50;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* Botões e links */
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 3.25rem;
+  padding: 0 1.6rem;
+  border: 1px solid #71834F;
+  border-radius: 3px;
+  background: #71834F;
+  color: #FFFDF7;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  border-color: #596B3D;
+  background: #596B3D;
+}
+
+.hero-button span {
+  font-size: 1rem;
+}
+
+.hero-secondary-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #55513D;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.hero-secondary-link:hover {
+  color: #71834F;
+}
+
+.hero-secondary-link span {
+  transition: transform 0.25s ease;
+}
+
+.hero-secondary-link:hover span {
+  transform: translateX(4px);
+}
+
+/* Assinatura */
+
+.hero-signature {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 3rem;
+  color: #756C4E;
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.hero-signature-symbol {
+  color: #9A9A69;
+  font-size: 1.2rem;
+  font-style: normal;
+}
+
+/* Legenda da fotografia */
+
+.hero-image-caption {
+  position: absolute;
+  right: 2.5rem;
+  bottom: 2rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #FFFDF7;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.caption-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #E7C987;
+}
+
+/* =========================================================
+   INTRODUÇÃO DA HOME
+   ========================================================= */
+
+.home-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 8vw, 8rem);
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 3.2vw, 2.75rem);
+}
+
+.home-intro-label {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #71834F;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.home-intro-heading h2 {
+  margin: 0;
+  color: #49452F;
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(2.7rem, 4.5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.home-intro-heading h2 em {
+  color: #71834F;
+  font-weight: 400;
+}
+
+.home-intro-content {
+  align-self: center;
+  max-width: 570px;
+}
+
+.home-intro-content p {
+  margin: 0 0 1.25rem;
+  color: #655F50;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.home-intro-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  border-top: 1px solid #DDD8C9;
+}
+
+.home-intro-links a {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 4rem;
+  border-bottom: 1px solid #DDD8C9;
+  color: #49452F;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: color 0.25s ease;
+}
+
+.home-intro-links a:hover {
+  color: #71834F;
+}
+
+.home-intro-links a span:first-child {
+  color: #9A956F;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.home-intro-links a span:last-child {
+  font-size: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.home-intro-links a:hover span:last-child {
+  transform: translate(3px, -3px);
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 600px;
+  }
+
+  .hero-visual {
+    width: 82%;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 3.8rem);
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      90deg,
+      #F8F3E8 0%,
+      rgba(248, 243, 232, 0.97) 38%,
+      rgba(248, 243, 232, 0.78) 58%,
+      rgba(248, 243, 232, 0.12) 100%
+    );
+  }
+
+  .home-intro {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: 720px;
+    align-items: flex-start;
+  }
+
+  .hero-visual {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 52%;
+  }
+
+  .hero-image {
+    object-position: 75% center;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      180deg,
+      #F8F3E8 0%,
+      #F8F3E8 43%,
+      rgba(248, 243, 232, 0.94) 52%,
+      rgba(248, 243, 232, 0.25) 72%,
+      rgba(248, 243, 232, 0) 100%
+    );
+  }
+
+  .hero-content {
+    width: calc(100% - 2.5rem);
+    padding: 3.5rem 0 2rem;
+  }
+
+  .hero h1 {
+    max-width: 500px;
+    font-size: clamp(2.7rem, 11vw, 3.5rem);
+  }
+
+  .hero-description {
+    max-width: 420px;
+    font-size: 0.98rem;
+  }
+
+  .hero-actions {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-button {
+    min-height: 3rem;
+    padding: 0 1.1rem;
+    font-size: 0.82rem;
+  }
+
+  .hero-secondary-link {
+    font-size: 0.82rem;
+  }
+
+  .hero-signature {
+    margin-top: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .hero-image-caption {
+    right: 1.25rem;
+    bottom: 1.25rem;
+    font-size: 0.68rem;
+  }
+
+  .home-intro {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 4.5rem 1.5rem;
+  }
+
+  .home-intro-heading h2 {
+    font-size: clamp(2.7rem, 10vw, 3.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-button,
+  .hero-secondary-link,
+  .hero-secondary-link span,
+  .home-intro-links a,
+  .home-intro-links a span:last-child {
+    transition: none;
+  }
+}
