@@ -1,98 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600&display=swap');
-
 /* =========================================================
-   VERSÃO 1 — SÁLVIA EDITORIAL
-   Sans moderna e arejada · sublinhado que nasce do centro
-   Botão "Criar conta" sólido em verde-oliva, formato pílula
+   JARDIM PET — HEADER
+   Identidade: Botanical Contemporary
+   Fontes: Fraunces (marca) + Figtree (interface e menu)
+
+   Paleta (regra de uso):
+   - Verde floresta  → ação e destaque (links, botão, hover)
+   - Tinta esverdeada → texto
+   - Sálvia / oliva   → superfícies e detalhes sutis
+   - Argila (único acento quente) → contador da sacola e "&"
    ========================================================= */
 
 .site-header {
-  /* paleta */
-  --hdr-bg: #f8f3e8;
-  --hdr-ink: #3d392c;
-  --hdr-ink-soft: #685f4f;
-  --hdr-accent: #7b8f57;
-  --hdr-accent-deep: #55663a;
-  --hdr-warm: #aa9560;
-  --hdr-sage-soft: #e4e9d6;
-  --hdr-line: #e8e1cd;
-  --hdr-line-strong: #d8d0b8;
+  --hdr-bg: #F8F3E8;
+  --hdr-ink: #2F3628;
+  --hdr-ink-soft: #6B6F5C;
+  --hdr-forest: #4B6340;
+  --hdr-forest-deep: #38502F;
+  --hdr-olive: #7E9460;
+  --hdr-clay: #A85A30;
+  --hdr-sage: #E6EADA;
+  --hdr-sage-hover: #DAE2CB;
+  --hdr-sage-line: #D3DBC3;
+  --hdr-line: #E3DDCB;
 
-  /* medidas e tipografia */
-  --hdr-height: 4.25rem;
-  --hdr-brand-size: 1.5rem;
   --hdr-font-brand: 'Fraunces', Georgia, serif;
-  --hdr-font-nav: 'Hanken Grotesk', 'Nunito Sans', system-ui, sans-serif;
-  --hdr-font-ui: 'Hanken Grotesk', 'Nunito Sans', system-ui, sans-serif;
-  --nav-size: 0.96rem;
-  --nav-weight: 500;
-  --nav-tracking: 0.012em;
-  --nav-gap: clamp(1.75rem, 3.6vw, 3.4rem);
-  --nav-hover: #55663a;
-  --nav-active: #3d392c;
+  --hdr-font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --hdr-font-nav: var(--hdr-font-ui);
 
-  /* sublinhado */
-  --ul-offset: 0.55rem;
-  --ul-origin: center;
-  --ul-hover: #8fa06c;
-  --ul-active: #55663a;
+  --hdr-height: 5.1rem;
+  --hdr-ui-size: 0.82rem;      /* Sacola, Entrar e Criar conta */
 
-  /* botão Criar conta */
-  --reg-height: 2.5rem;
-  --reg-pad: 1.25rem;
-  --reg-radius: 999px;
-  --reg-font: 'Hanken Grotesk', 'Nunito Sans', system-ui, sans-serif;
-  --reg-size: 0.88rem;
-  --reg-weight: 500;
-  --reg-bg: #55663a;
-  --reg-color: #fbf8ee;
-  --reg-border: #55663a;
-  --reg-bg-h: #44532e;
-  --reg-color-h: #fbf8ee;
-  --reg-border-h: #44532e;
+  /* Fallback de correção óptica do rótulo "Sacola" (só para navegadores
+     sem suporte a text-box, como o Firefox). Valor estimado: ajuste se
+     necessário (maior = texto mais baixo). */
+  --cart-label-optical: 0.04em;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: var(--hdr-ink);
+  background: rgba(248, 243, 232, 0.92);
+  -webkit-backdrop-filter: saturate(1.1) blur(10px);
+  backdrop-filter: saturate(1.1) blur(10px);
+  border-bottom: 1px solid var(--hdr-line);
+  transition:
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
-/* Variáveis herdadas pelo bloco abaixo: ".header-navigation a:hover" etc. */
-.site-header { --hdr-nav-hover: var(--nav-hover); --hdr-nav-active: var(--nav-active); }
-
-/* =========================================================
-   HEADER — JARDIM PET
-   Estrutura comum + variáveis de tema (definidas no bloco
-   ".site-header" logo abaixo, no início do arquivo).
-   ========================================================= */
-
-.site-header,
 .site-header *,
 .site-header *::before,
 .site-header *::after {
   box-sizing: border-box;
 }
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--hdr-bg);
-  border-bottom: 1px solid var(--hdr-line);
-  color: var(--hdr-ink);
-  transition: border-color 0.3s ease;
-}
-
 .site-header.is-scrolled {
-  border-bottom-color: var(--hdr-line-strong);
+  background: rgba(248, 243, 232, 0.95);
+  border-bottom-color: #D6D0BC;
+  box-shadow: 0 7px 24px rgba(47, 54, 40, 0.06);
 }
 
-/* ---------- Barra: 1 linha — marca | navegação centralizada | ações ---------- */
+/* ---------- Barra principal ---------- */
 
 .header-bar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  column-gap: 1.5rem;
-  max-width: 1320px;
+  column-gap: clamp(1rem, 2.5vw, 2.5rem);
+
+  width: 100%;
+  max-width: 1400px;
   height: var(--hdr-height);
   margin: 0 auto;
-  padding: 0 clamp(1.25rem, 3.2vw, 2.75rem);
+  padding: 0 clamp(1.5rem, 4vw, 3.5rem);
 }
 
 /* ---------- Marca ---------- */
@@ -102,7 +83,8 @@
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.2rem;
+  gap: 0.34rem;
+
   color: var(--hdr-ink);
   text-decoration: none;
   line-height: 1;
@@ -110,40 +92,77 @@
 
 .brand-composition {
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center;
+  position: relative;
 }
 
 .brand-name {
+  display: inline-flex;
+  align-items: baseline;
+
   font-family: var(--hdr-font-brand);
-  font-size: var(--hdr-brand-size);
+  font-size: 1.75rem;
   font-weight: 600;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
   white-space: nowrap;
 }
 
-.brand-jardim { color: var(--hdr-ink); }
-.brand-pet    { color: var(--hdr-accent-deep); }
-.brand-period { color: var(--hdr-warm); }
+.brand-jardim {
+  color: var(--hdr-ink);
+}
 
-.brand-branch {
+/* "Pet" em itálico: contraste de estilo, mais orgânico */
+.brand-pet {
+  margin-left: 0.03em;
+  color: var(--hdr-forest);
+  font-style: italic;
+}
+
+/* Broto de folha: nasce no topo da palavra */
+.brand-leaf {
   flex-shrink: 0;
-  width: calc(var(--hdr-brand-size) * 0.72);
-  height: calc(var(--hdr-brand-size) * 0.72);
-  margin: -0.28em 0 0 0.12em;
-  color: var(--hdr-accent);
+  align-self: flex-start;
+
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.08em;
+
+  overflow: visible;
+  transform-origin: 15% 90%;
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.brand-leaf .leaf-blade {
+  fill: var(--hdr-olive);
+}
+
+.brand-leaf .leaf-vein {
+  fill: none;
+  stroke: var(--hdr-bg);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.header-brand:hover .brand-leaf,
+.header-brand:focus-visible .brand-leaf {
+  transform: rotate(9deg) scale(1.08);
 }
 
 .brand-kicker {
+  padding-left: 0.1rem;
   font-family: var(--hdr-font-ui);
-  font-size: 0.54rem;
+  font-size: 0.58rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--hdr-ink-soft);
 }
 
 .brand-kicker span {
-  color: var(--hdr-warm);
+  padding: 0 0.1rem;
+  color: var(--hdr-clay);
 }
 
 /* ---------- Navegação ---------- */
@@ -152,199 +171,275 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--nav-gap);
+  gap: 2.2rem;
 }
 
 .header-navigation a {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
-  padding: 0.25rem 0;
+
+  color: var(--hdr-ink);
   font-family: var(--hdr-font-nav);
-  font-size: var(--nav-size);
-  font-weight: var(--nav-weight);
-  letter-spacing: var(--nav-tracking);
-  color: var(--hdr-ink-soft);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  line-height: 1.5;
   text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.3s ease;
+
+  transition: color 0.25s ease;
 }
 
-/* Sublinhado fino: cresce no hover/foco e permanece na rota ativa */
-.header-navigation a::after,
-.header-login::after {
+/* Detalhe orgânico sob os links */
+
+.header-navigation a::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
-  bottom: var(--ul-offset);
-  height: 1px;
-  background: var(--ul-hover);
+  bottom: 0.35rem;
+
+  height: 1.5px;
+  border-radius: 50%;
+  background: var(--hdr-olive);
+
   transform: scaleX(0);
-  transform-origin: var(--ul-origin);
-  transition: transform 0.38s cubic-bezier(0.22, 0.61, 0.36, 1),
-    background-color 0.3s ease;
+  transform-origin: left center;
+
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .header-navigation a:hover,
-.header-navigation a:focus-visible {
-  color: var(--hdr-nav-hover);
-}
-
+.header-navigation a:focus-visible,
 .header-navigation a.active {
-  color: var(--hdr-nav-active);
+  color: var(--hdr-forest);
 }
 
 .header-navigation a:hover::after,
 .header-navigation a:focus-visible::after,
-.header-navigation a.active::after,
-.header-login:hover::after,
-.header-login:focus-visible::after,
-.header-login.active::after {
+.header-navigation a.active::after {
   transform: scaleX(1);
 }
 
-.header-navigation a.active::after,
-.header-login.active::after {
-  background: var(--ul-active);
+/* "Criar conta" dentro do menu: só existe no mobile */
+.site-header .header-navigation .nav-cta {
+  display: none;
 }
 
-/* ---------- Ações (conta + carrinho) ---------- */
+/* ---------- Ações ---------- */
 
 .header-actions {
   justify-self: end;
   display: flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1.1rem;
   min-width: 0;
+}
+
+.header-action-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 1.7rem;
+  background: var(--hdr-line);
 }
 
 .header-account {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.header-login {
+/* ---------- Login ---------- */
+/* Seletores com .site-header vencem regras genéricas de links
+   sem precisar de !important. */
+
+.site-header .header-login {
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 2.5rem;
-  font-family: var(--hdr-font-nav);
-  font-size: calc(var(--nav-size) * 0.94);
-  font-weight: var(--nav-weight);
-  letter-spacing: var(--nav-tracking);
-  color: var(--hdr-ink-soft);
+
+  min-height: 2.6rem;
+  color: var(--hdr-forest);
+
+  font-family: var(--hdr-font-ui);
+  font-size: var(--hdr-ui-size);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
   text-decoration: none;
   white-space: nowrap;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
-.header-login::after {
-  bottom: 0.45rem;
+.site-header .header-login:hover,
+.site-header .header-login:focus-visible,
+.site-header .header-login.active {
+  color: var(--hdr-forest-deep);
 }
 
-.header-login:hover,
-.header-login:focus-visible,
-.header-login.active {
-  color: var(--hdr-nav-hover);
-}
-
-.header-register {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--reg-height);
-  padding: 0 var(--reg-pad);
-  border: 1px solid var(--reg-border);
-  border-radius: var(--reg-radius);
-  background: var(--reg-bg);
-  color: var(--reg-color);
-  font-family: var(--reg-font);
-  font-size: var(--reg-size);
-  font-weight: var(--reg-weight);
-  letter-spacing: 0.01em;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.3s ease, color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.header-register:hover,
-.header-register:focus-visible,
-.header-register.active {
-  border-color: var(--reg-border-h);
-  background: var(--reg-bg-h);
-  color: var(--reg-color-h);
-}
-
-/* a seta do JSX fica oculta: visual menos "tecnológico" */
-.header-register span {
+/* Ícone de usuário: só aparece no mobile pequeno */
+.site-header .header-login .login-icon {
   display: none;
 }
 
-.header-action-divider {
-  width: 1px;
-  height: 1.25rem;
-  background: var(--hdr-line-strong);
+/* ---------- Cadastro ---------- */
+
+.site-header .header-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  min-height: 2.45rem;
+  padding: 0 1.15rem;
+
+  border: 1px solid var(--hdr-forest);
+  border-radius: 999px;
+
+  background: var(--hdr-forest);
+  color: var(--hdr-bg);
+
+  font-family: var(--hdr-font-ui);
+  font-size: var(--hdr-ui-size);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
-/* ---------- Carrinho ---------- */
+.site-header .header-register:hover,
+.site-header .header-register:focus-visible,
+.site-header .header-register.active {
+  background: transparent;
+  border-color: var(--hdr-forest);
+  color: var(--hdr-forest);
+}
+
+/* Seta (SVG): aponta para a direita e avança no hover */
+.btn-arrow {
+  flex-shrink: 0;
+  width: 0.85rem;
+  height: 0.85rem;
+  transition: transform 0.25s ease;
+}
+
+.header-register:hover .btn-arrow,
+.header-register:focus-visible .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Sacola ---------- */
 
 .header-cart {
   display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--hdr-font-nav);
-  font-size: calc(var(--nav-size) * 0.94);
-  font-weight: var(--nav-weight);
-  letter-spacing: var(--nav-tracking);
+  align-items: center;      /* único responsável pelo alinhamento vertical */
+  gap: 0.5rem;
+
   color: var(--hdr-ink);
+  font-family: var(--hdr-font-ui);
+  font-size: var(--hdr-ui-size);
+  font-weight: 500;
+  line-height: 1;
+
   text-decoration: none;
-  transition: color 0.3s ease;
+  white-space: nowrap;
+  transition: color 0.25s ease;
 }
 
 .header-cart:hover,
 .header-cart:focus-visible,
 .header-cart.active {
-  color: var(--hdr-accent-deep);
+  color: var(--hdr-forest);
 }
 
 .cart-icon {
   position: relative;
-  display: inline-flex;
-  width: 1.6rem;
-  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  width: 2.4rem;
+  height: 2.4rem;
+
+  border-radius: 50%;
+  background: var(--hdr-sage);
+
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.header-cart:hover .cart-icon {
+  background: var(--hdr-sage-hover);
+  transform: translateY(-2px);
 }
 
 .cart-icon svg {
-  width: 100%;
-  height: 100%;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
-.cart-count {
-  position: absolute;
-  top: -0.4rem;
-  right: -0.55rem;
-  display: grid;
-  place-items: center;
-  min-width: 1.05rem;
-  height: 1.05rem;
-  padding: 0 0.28rem;
-  border-radius: 999px;
-  background: var(--hdr-accent-deep);
-  color: #fbf8ee;
-  font-family: var(--hdr-font-ui);
-  font-size: 0.64rem;
-  font-weight: 700;
+/*
+  Rótulo "Sacola": bloco simples centralizado pelo .header-cart.
+  Cor, peso e espaçamento são fixados aqui (com especificidade alta)
+  para que nenhum CSS externo os altere.
+  Com suporte a text-box, a caixa é cortada na altura de maiúsculas e na
+  linha de base (centro da caixa = centro visual das letras).
+*/
+.site-header .header-cart .cart-label {
+  display: block;
+  align-self: center;
+
+  margin: 0;
+  padding: var(--cart-label-optical) 0 0;
+
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: 0.02em;
+
+  transform: none;
+  min-height: 0;
   line-height: 1;
 }
 
-.cart-count.is-empty {
-  background: var(--hdr-sage-soft);
-  color: var(--hdr-accent-deep);
+@supports (text-box: trim-both cap alphabetic) {
+  .site-header .header-cart .cart-label {
+    padding: 0;
+    text-box: trim-both cap alphabetic;
+  }
+}
+
+/* Contador: único acento quente do cabeçalho; só aparece com itens */
+.cart-count {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.2rem;
+
+  display: grid;
+  place-items: center;
+
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 0.26rem;
+
+  border: 2px solid var(--hdr-bg);
+  border-radius: 999px;
+
+  background: var(--hdr-clay);   /* branco sobre #A85A30 ≈ 5:1 */
+  color: #fff;
+
+  font-family: var(--hdr-font-ui);
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .cart-count.is-bump {
@@ -352,17 +447,17 @@
 }
 
 @keyframes cart-bump {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.28); }
+  0% { transform: scale(1); }
+  40% { transform: scale(1.28); }
   100% { transform: scale(1); }
 }
 
-/* ---------- Usuário autenticado ---------- */
+/* ---------- Cliente autenticado ---------- */
 
 .header-user {
   display: flex;
   align-items: center;
-  gap: 0.95rem;
+  gap: 0.9rem;
   min-width: 0;
 }
 
@@ -370,28 +465,35 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
+
   min-width: 0;
-  font-family: var(--hdr-font-ui);
-  font-size: 0.82rem;
   color: var(--hdr-ink-soft);
+
+  font-family: var(--hdr-font-ui);
+  font-size: 0.78rem;
 }
 
 .header-greeting strong {
-  font-weight: 700;
   color: var(--hdr-ink);
+  font-weight: 600;
 }
 
 .user-avatar {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-  width: 1.75rem;
-  height: 1.75rem;
+
+  width: 1.95rem;
+  height: 1.95rem;
+
+  border: 1px solid var(--hdr-sage-line);
   border-radius: 50%;
-  background: var(--hdr-sage-soft);
-  color: var(--hdr-accent-deep);
-  font-weight: 700;
+
+  background: var(--hdr-sage);
+  color: var(--hdr-forest);
+
   font-size: 0.76rem;
+  font-weight: 600;
 }
 
 .greeting-text {
@@ -402,28 +504,26 @@
 }
 
 .header-logout {
-  padding: 0.35rem 0;
+  padding: 0.4rem 0;
+
   border: 0;
   background: none;
-  font-family: var(--hdr-font-ui);
-  font-size: 0.82rem;
-  font-weight: 600;
+
   color: var(--hdr-ink-soft);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.3em;
-  text-decoration-color: transparent;
+  font-family: var(--hdr-font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+
   cursor: pointer;
-  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 .header-logout:hover,
 .header-logout:focus-visible {
-  color: var(--hdr-accent-deep);
-  text-decoration-color: currentColor;
+  color: var(--hdr-forest);
 }
 
-/* ---------- Foco visível ---------- */
+/* ---------- Acessibilidade ---------- */
 
 .header-brand:focus-visible,
 .header-navigation a:focus-visible,
@@ -432,21 +532,23 @@
 .header-cart:focus-visible,
 .header-logout:focus-visible,
 .header-toggle:focus-visible {
-  outline: 2px solid var(--hdr-accent);
+  outline: 2px solid var(--hdr-forest);
   outline-offset: 4px;
-  border-radius: 4px;
 }
 
-/* ---------- Botão do menu (apenas mobile/tablet) ---------- */
+/* ---------- Menu mobile ---------- */
 
 .header-toggle {
   display: none;
   position: relative;
+
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-  border: 1px solid var(--hdr-line-strong);
+
+  border: 1px solid var(--hdr-sage-line);
   border-radius: 50%;
+
   background: transparent;
   cursor: pointer;
 }
@@ -455,15 +557,24 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 1.05rem;
+
+  width: 1rem;
   height: 1.5px;
-  margin-left: -0.525rem;
+  margin-left: -0.5rem;
+
+  border-radius: 2px;
   background: var(--hdr-ink);
+
   transition: transform 0.3s ease;
 }
 
-.toggle-line:nth-child(1) { margin-top: -4px; }
-.toggle-line:nth-child(2) { margin-top: 2.5px; }
+.toggle-line:nth-child(1) {
+  margin-top: -4px;
+}
+
+.toggle-line:nth-child(2) {
+  margin-top: 2.5px;
+}
 
 .site-header.is-open .toggle-line:nth-child(1) {
   transform: translateY(3.25px) rotate(45deg);
@@ -474,47 +585,76 @@
 }
 
 /* =========================================================
-   NOTEBOOK (1081–1279px): carrinho só com ícone
+   NOTEBOOK
    ========================================================= */
 
 @media (min-width: 1081px) and (max-width: 1279px) {
-  .cart-label { display: none; }
-  .header-bar { column-gap: 1rem; }
+  .header-bar {
+    column-gap: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .header-navigation {
+    gap: 1.6rem;
+  }
+
+  .header-navigation a {
+    font-size: 0.7rem;
+  }
+
+  .site-header .header-cart .cart-label {
+    display: none;
+  }
 }
 
 /* =========================================================
-   TABLET / MOBILE (≤ 1080px): menu em painel
+   TABLET / MOBILE
    ========================================================= */
 
 @media (max-width: 1080px) {
   .header-bar {
     grid-template-columns: minmax(0, 1fr) auto auto;
-    column-gap: 0.9rem;
-    height: min(var(--hdr-height), 4rem);
+    column-gap: 1rem;
+    height: 4.6rem;
+    padding: 0 clamp(1.2rem, 3.5vw, 2rem);
   }
 
-  .header-toggle { display: inline-block; }
+  .header-toggle {
+    display: inline-block;
+  }
 
-  .cart-label,
-  .header-action-divider { display: none; }
+  .site-header .header-cart .cart-label,
+  .header-action-divider {
+    display: none;
+  }
 
   .header-navigation {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
+
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-    padding: 0.35rem clamp(1.25rem, 3.2vw, 2.75rem) 1rem;
+
+    padding: 0.5rem clamp(1.4rem, 4vw, 2.5rem) 1.2rem;
+
     background: var(--hdr-bg);
-    border-bottom: 1px solid var(--hdr-line-strong);
+    border-bottom: 1px solid var(--hdr-line);
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+
     transform: translateY(-0.4rem);
-    transition: opacity 0.25s ease, transform 0.25s ease,
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
       visibility 0s linear 0.25s;
   }
 
@@ -522,46 +662,187 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: none;
-    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s;
+    transform: translateY(0);
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0s;
   }
 
   .header-navigation a {
-    min-height: 3.1rem;
-    font-size: max(var(--nav-size), 1rem);
+    min-height: 3.2rem;
+    padding: 0.3rem 0;
+
     border-bottom: 1px solid var(--hdr-line);
+    font-size: 0.78rem;
   }
 
-  .header-navigation a:last-child { border-bottom: 0; }
+  .header-navigation a:last-child {
+    border-bottom: 0;
+  }
 
-  .header-navigation a::after { display: none; }
+  .header-navigation a::after {
+    display: none;
+  }
 
   .header-navigation a.active::before {
     content: '';
-    width: 0.4rem;
-    height: 0.4rem;
-    margin-right: 0.7rem;
+    flex-shrink: 0;
+
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-right: 0.8rem;
+
     border-radius: 0 100% 0 100%;
-    background: var(--hdr-accent);
+    background: var(--hdr-olive);
   }
 }
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 640px) {
-  .user-avatar + .greeting-text { display: none; }
-  .header-account { gap: 0.9rem; }
-  .brand-name { font-size: min(var(--hdr-brand-size), 1.45rem); }
+  .header-bar {
+    column-gap: 0.7rem;
+    padding: 0 1rem;
+  }
+
+  .brand-name {
+    font-size: 1.55rem;
+  }
+
+  .header-actions {
+    gap: 0.7rem;
+  }
+
+  .header-account {
+    gap: 0.7rem;
+  }
+
+  .site-header .header-login {
+    font-size: 0.78rem;
+  }
+
+  .site-header .header-register {
+    min-height: 2.3rem;
+    padding: 0 0.9rem;
+    font-size: 0.76rem;
+  }
+
+  .cart-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .user-avatar + .greeting-text {
+    display: none;
+  }
 }
 
-@media (max-width: 420px) {
-  .header-bar { column-gap: 0.55rem; }
-  .brand-kicker { display: none; }
-  .brand-name { font-size: min(var(--hdr-brand-size), 1.3rem); }
-  .header-actions { gap: 0.6rem; }
-  .header-account { gap: 0.6rem; }
-  .header-login { font-size: 0.78rem; }
-  .header-register { padding: 0 0.7rem; font-size: 0.78rem; }
-  .header-toggle { width: 2.2rem; height: 2.2rem; }
+/* =========================================================
+   MOBILE PEQUENO
+   Barra enxuta: marca + sacola + usuário + menu.
+   "Criar conta" passa para dentro do menu.
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .site-header .header-register {
+    display: none;
+  }
+
+  .site-header .header-login {
+    min-height: 0;
+  }
+
+  .site-header .header-login .login-text {
+    display: none;
+  }
+
+  .site-header .header-login .login-icon {
+    display: grid;
+    place-items: center;
+
+    width: 2.25rem;
+    height: 2.25rem;
+
+    border-radius: 50%;
+    background: var(--hdr-sage);
+  }
+
+  .header-login .login-icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .site-header .header-navigation .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: 2.8rem;
+    margin-top: 0.9rem;
+    padding: 0 1.3rem;
+
+    border: 1px solid var(--hdr-forest);
+    border-radius: 999px;
+    background: var(--hdr-forest);
+    color: var(--hdr-bg);
+
+    font-family: var(--hdr-font-ui);
+    font-size: 0.86rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .site-header .header-navigation .nav-cta::before {
+    display: none;
+  }
+
+  .site-header .header-navigation .nav-cta:hover,
+  .site-header .header-navigation .nav-cta:focus-visible,
+  .site-header .header-navigation .nav-cta.active {
+    background: transparent;
+    color: var(--hdr-forest);
+  }
+
+  .site-header .header-navigation .nav-cta:hover .btn-arrow,
+  .site-header .header-navigation .nav-cta:focus-visible .btn-arrow {
+    transform: translateX(3px);
+  }
 }
+
+/* ---------- Telas menores ---------- */
+
+@media (max-width: 420px) {
+  .header-bar {
+    column-gap: 0.45rem;
+    padding: 0 0.75rem;
+  }
+
+  .brand-kicker {
+    display: none;
+  }
+
+  .brand-name {
+    font-size: 1.38rem;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
+  }
+
+  .header-toggle {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+}
+
+/* ---------- Movimento reduzido ---------- */
+/* Único !important que permanece: é intencional, precisa vencer tudo. */
 
 @media (prefers-reduced-motion: reduce) {
   .site-header *,

@@ -1,9 +1,31 @@
+
 import { Link } from 'react-router-dom'
 import './Home.css'
+
+function ArrowIcon() {
+  return (
+    <svg
+      className="home-arrow"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M5 12h14M13 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 function Home() {
   return (
     <main className="home">
+      {/* HERO */}
       <section className="hero">
         <div className="hero-visual">
           <img
@@ -67,66 +89,61 @@ function Home() {
           <div className="hero-actions">
             <Link to="/mundo-pet" className="hero-button">
               Explore o Mundo Pet
-              <span aria-hidden="true">↗</span>
+              <ArrowIcon />
             </Link>
 
             <Link to="/nosso-jardim" className="hero-secondary-link">
               Conheça nosso Jardim
-              <span aria-hidden="true">→</span>
+              <ArrowIcon />
             </Link>
           </div>
 
           <div className="hero-signature">
-            <span className="hero-signature-symbol" aria-hidden="true">✳</span>
+            <span className="hero-signature-symbol" aria-hidden="true" />
             <span>Cuidado que faz parte de todos os dias.</span>
           </div>
         </div>
       </section>
 
+      {/* SEGUNDA SEÇÃO — NOSSO JARDIM */}
       <section className="home-intro">
-        <div className="home-intro-heading">
-          <span className="home-intro-label">
-            Descubra nossos universos
-          </span>
-
-          <h2>
-            Um mundo de
-            <br />
-            cuidados e
-            <br />
-            <em>boas escolhas.</em>
-          </h2>
+        <div className="home-intro-image-wrap">
+          <img
+            className="home-intro-image"
+            src="/images/home-jardim.jpg"
+            alt="Plantas naturais compondo um ambiente acolhedor"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
 
         <div className="home-intro-content">
-          <p>
-            Cada casa tem sua própria história, seus hábitos
-            e detalhes que a tornam única. Os animais que
-            fazem parte da família e as plantas que compõem
-            nossos ambientes ajudam a contar essa história.
-          </p>
+          <span className="home-intro-label">
+            Nosso Jardim
+          </span>
+
+          <h2>
+            A natureza
+            <br />
+            transforma
+            <br />
+            <em>os espaços.</em>
+          </h2>
 
           <p>
-            No Jardim Pet, você encontra produtos para a
-            rotina dos seus animais e opções para trazer
-            mais personalidade aos seus espaços. Tudo
-            reunido para tornar suas escolhas mais práticas
-            e agradáveis.
+            Um toque de verde pode transformar a atmosfera
+            de um ambiente. Descubra plantas e detalhes
+            que aproximam a natureza da sua casa e tornam
+            cada espaço ainda mais especial.
           </p>
 
-          <div className="home-intro-links">
-            <Link to="/mundo-pet">
-              <span>01</span>
-              Mundo Pet
-              <span aria-hidden="true">↗</span>
-            </Link>
-
-            <Link to="/nosso-jardim">
-              <span>02</span>
-              Nosso Jardim
-              <span aria-hidden="true">↗</span>
-            </Link>
-          </div>
+          <Link
+            to="/nosso-jardim"
+            className="home-intro-cta"
+          >
+            Conheça nosso Jardim
+            <ArrowIcon />
+          </Link>
         </div>
       </section>
     </main>
