@@ -1,16 +1,27 @@
-# React + Vite
+# Jardim Pet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Loja virtual de produtos para pets e jardim, desenvolvida como projeto de portfólio.
 
-Currently, two official plugins are available:
+## Sobre o projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+O Jardim Pet reúne produtos para animais de estimação e plantas em uma loja virtual com identidade visual inspirada na natureza e foco em uma experiência de navegação simples e intuitiva.
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- JavaScript
+- HTML e CSS
+- Node.js e Express
+- MySQL
 
-## Expanding the ESLint configuration
+## Status
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Em desenvolvimento.
+
+## Objetivo
+
+Projeto desenvolvido para praticar e aprimorar conhecimentos em desenvolvimento web e Engenharia de Software.
+
+---
+
+Desenvolvido por Eduarda de Souza Ribeiro.
