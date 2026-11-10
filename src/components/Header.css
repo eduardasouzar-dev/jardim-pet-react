@@ -2,12 +2,6 @@
    JARDIM PET — HEADER
    Identidade: Botanical Contemporary
    Fontes: Fraunces (marca) + Figtree (interface e menu)
-
-   Paleta (regra de uso):
-   - Verde floresta  → ação e destaque (links, botão, hover)
-   - Tinta esverdeada → texto
-   - Sálvia / oliva   → superfícies e detalhes sutis
-   - Argila (único acento quente) → contador da sacola e "&"
    ========================================================= */
 
 .site-header {
@@ -28,11 +22,7 @@
   --hdr-font-nav: var(--hdr-font-ui);
 
   --hdr-height: 5.1rem;
-  --hdr-ui-size: 0.82rem;      /* Sacola, Entrar e Criar conta */
-
-  /* Fallback de correção óptica do rótulo "Sacola" (só para navegadores
-     sem suporte a text-box, como o Firefox). Valor estimado: ajuste se
-     necessário (maior = texto mais baixo). */
+  --hdr-ui-size: 0.82rem;
   --cart-label-optical: 0.04em;
 
   position: sticky;
@@ -63,12 +53,11 @@
 
 /* ---------- Barra principal ---------- */
 
-.header-bar {
+.site-header .header-bar {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   column-gap: clamp(1rem, 2.5vw, 2.5rem);
-
   width: 100%;
   max-width: 1400px;
   height: var(--hdr-height);
@@ -78,28 +67,26 @@
 
 /* ---------- Marca ---------- */
 
-.header-brand {
+.site-header .header-brand {
   justify-self: start;
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.34rem;
-
   color: var(--hdr-ink);
   text-decoration: none;
   line-height: 1;
 }
 
-.brand-composition {
+.site-header .brand-composition {
   display: inline-flex;
   align-items: center;
   position: relative;
 }
 
-.brand-name {
+.site-header .brand-name {
   display: inline-flex;
   align-items: baseline;
-
   font-family: var(--hdr-font-brand);
   font-size: 1.75rem;
   font-weight: 600;
@@ -108,48 +95,45 @@
   white-space: nowrap;
 }
 
-.brand-jardim {
+/* Escopo específico para não afetar o rodapé */
+.site-header .brand-jardim {
   color: var(--hdr-ink);
 }
 
-/* "Pet" em itálico: contraste de estilo, mais orgânico */
-.brand-pet {
+.site-header .brand-pet {
   margin-left: 0.03em;
   color: var(--hdr-forest);
   font-style: italic;
 }
 
-/* Broto de folha: nasce no topo da palavra */
-.brand-leaf {
+.site-header .brand-leaf {
   flex-shrink: 0;
   align-self: flex-start;
-
   width: 0.4em;
   height: 0.4em;
   margin-left: 0.08em;
-
   overflow: visible;
   transform-origin: 15% 90%;
   transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.brand-leaf .leaf-blade {
+.site-header .brand-leaf .leaf-blade {
   fill: var(--hdr-olive);
 }
 
-.brand-leaf .leaf-vein {
+.site-header .brand-leaf .leaf-vein {
   fill: none;
   stroke: var(--hdr-bg);
   stroke-width: 1.6;
   stroke-linecap: round;
 }
 
-.header-brand:hover .brand-leaf,
-.header-brand:focus-visible .brand-leaf {
+.site-header .header-brand:hover .brand-leaf,
+.site-header .header-brand:focus-visible .brand-leaf {
   transform: rotate(9deg) scale(1.08);
 }
 
-.brand-kicker {
+.site-header .brand-kicker {
   padding-left: 0.1rem;
   font-family: var(--hdr-font-ui);
   font-size: 0.58rem;
@@ -160,23 +144,22 @@
   color: var(--hdr-ink-soft);
 }
 
-.brand-kicker span {
+.site-header .brand-kicker span {
   padding: 0 0.1rem;
   color: var(--hdr-clay);
 }
 
 /* ---------- Navegação ---------- */
 
-.header-navigation {
+.site-header .header-navigation {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2.2rem;
 }
 
-.header-navigation a {
+.site-header .header-navigation a {
   position: relative;
-
   color: var(--hdr-ink);
   font-family: var(--hdr-font-nav);
   font-size: 0.72rem;
@@ -185,49 +168,42 @@
   text-transform: uppercase;
   line-height: 1.5;
   text-decoration: none;
-
   transition: color 0.25s ease;
 }
 
-/* Detalhe orgânico sob os links */
-
-.header-navigation a::after {
+.site-header .header-navigation a::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0.35rem;
-
   height: 1.5px;
   border-radius: 50%;
   background: var(--hdr-olive);
-
   transform: scaleX(0);
   transform-origin: left center;
-
   transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.header-navigation a:hover,
-.header-navigation a:focus-visible,
-.header-navigation a.active {
+.site-header .header-navigation a:hover,
+.site-header .header-navigation a:focus-visible,
+.site-header .header-navigation a.active {
   color: var(--hdr-forest);
 }
 
-.header-navigation a:hover::after,
-.header-navigation a:focus-visible::after,
-.header-navigation a.active::after {
+.site-header .header-navigation a:hover::after,
+.site-header .header-navigation a:focus-visible::after,
+.site-header .header-navigation a.active::after {
   transform: scaleX(1);
 }
 
-/* "Criar conta" dentro do menu: só existe no mobile */
 .site-header .header-navigation .nav-cta {
   display: none;
 }
 
 /* ---------- Ações ---------- */
 
-.header-actions {
+.site-header .header-actions {
   justify-self: end;
   display: flex;
   align-items: center;
@@ -235,36 +211,31 @@
   min-width: 0;
 }
 
-.header-action-divider {
+.site-header .header-action-divider {
   flex-shrink: 0;
   width: 1px;
   height: 1.7rem;
   background: var(--hdr-line);
 }
 
-.header-account {
+.site-header .header-account {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
 /* ---------- Login ---------- */
-/* Seletores com .site-header vencem regras genéricas de links
-   sem precisar de !important. */
 
 .site-header .header-login {
   position: relative;
   display: inline-flex;
   align-items: center;
-
   min-height: 2.6rem;
   color: var(--hdr-forest);
-
   font-family: var(--hdr-font-ui);
   font-size: var(--hdr-ui-size);
   font-weight: 500;
   letter-spacing: 0.02em;
-
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.25s ease;
@@ -276,7 +247,6 @@
   color: var(--hdr-forest-deep);
 }
 
-/* Ícone de usuário: só aparece no mobile pequeno */
 .site-header .header-login .login-icon {
   display: none;
 }
@@ -288,24 +258,18 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-
   min-height: 2.45rem;
   padding: 0 1.15rem;
-
   border: 1px solid var(--hdr-forest);
   border-radius: 999px;
-
   background: var(--hdr-forest);
   color: var(--hdr-bg);
-
   font-family: var(--hdr-font-ui);
   font-size: var(--hdr-ui-size);
   font-weight: 500;
   letter-spacing: 0.02em;
-
   text-decoration: none;
   white-space: nowrap;
-
   transition:
     background-color 0.25s ease,
     color 0.25s ease,
@@ -321,90 +285,74 @@
   color: var(--hdr-forest);
 }
 
-/* Seta (SVG): aponta para a direita e avança no hover */
-.btn-arrow {
+.site-header .btn-arrow {
   flex-shrink: 0;
   width: 0.85rem;
   height: 0.85rem;
   transition: transform 0.25s ease;
 }
 
-.header-register:hover .btn-arrow,
-.header-register:focus-visible .btn-arrow {
+.site-header .header-register:hover .btn-arrow,
+.site-header .header-register:focus-visible .btn-arrow {
   transform: translateX(3px);
 }
 
 /* ---------- Sacola ---------- */
 
-.header-cart {
+.site-header .header-cart {
   display: inline-flex;
-  align-items: center;      /* único responsável pelo alinhamento vertical */
+  align-items: center;
   gap: 0.5rem;
-
   color: var(--hdr-ink);
   font-family: var(--hdr-font-ui);
   font-size: var(--hdr-ui-size);
   font-weight: 500;
   line-height: 1;
-
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.25s ease;
 }
 
-.header-cart:hover,
-.header-cart:focus-visible,
-.header-cart.active {
+.site-header .header-cart:hover,
+.site-header .header-cart:focus-visible,
+.site-header .header-cart.active {
   color: var(--hdr-forest);
 }
 
-.cart-icon {
+.site-header .cart-icon {
   position: relative;
   display: grid;
   place-items: center;
   flex-shrink: 0;
-
   width: 2.4rem;
   height: 2.4rem;
-
   border-radius: 50%;
   background: var(--hdr-sage);
-
   transition:
     background-color 0.25s ease,
     transform 0.25s ease;
 }
 
-.header-cart:hover .cart-icon {
+.site-header .header-cart:hover .cart-icon {
   background: var(--hdr-sage-hover);
   transform: translateY(-2px);
 }
 
-.cart-icon svg {
+.site-header .cart-icon svg {
   width: 1.2rem;
   height: 1.2rem;
 }
 
-/*
-  Rótulo "Sacola": bloco simples centralizado pelo .header-cart.
-  Cor, peso e espaçamento são fixados aqui (com especificidade alta)
-  para que nenhum CSS externo os altere.
-  Com suporte a text-box, a caixa é cortada na altura de maiúsculas e na
-  linha de base (centro da caixa = centro visual das letras).
-*/
 .site-header .header-cart .cart-label {
   display: block;
   align-self: center;
-
   margin: 0;
   padding: var(--cart-label-optical) 0 0;
-
   color: inherit;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: 0.02em;
-
   transform: none;
   min-height: 0;
   line-height: 1;
@@ -417,32 +365,26 @@
   }
 }
 
-/* Contador: único acento quente do cabeçalho; só aparece com itens */
-.cart-count {
+.site-header .cart-count {
   position: absolute;
   top: -0.2rem;
   right: -0.2rem;
-
   display: grid;
   place-items: center;
-
   min-width: 1.1rem;
   height: 1.1rem;
   padding: 0 0.26rem;
-
   border: 2px solid var(--hdr-bg);
   border-radius: 999px;
-
-  background: var(--hdr-clay);   /* branco sobre #A85A30 ≈ 5:1 */
+  background: var(--hdr-clay);
   color: #fff;
-
   font-family: var(--hdr-font-ui);
   font-size: 0.6rem;
   font-weight: 700;
   line-height: 1;
 }
 
-.cart-count.is-bump {
+.site-header .cart-count.is-bump {
   animation: cart-bump 0.45s ease;
 }
 
@@ -454,125 +396,110 @@
 
 /* ---------- Cliente autenticado ---------- */
 
-.header-user {
+.site-header .header-user {
   display: flex;
   align-items: center;
   gap: 0.9rem;
   min-width: 0;
 }
 
-.header-greeting {
+.site-header .header-greeting {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-
   min-width: 0;
   color: var(--hdr-ink-soft);
-
   font-family: var(--hdr-font-ui);
   font-size: 0.78rem;
 }
 
-.header-greeting strong {
+.site-header .header-greeting strong {
   color: var(--hdr-ink);
   font-weight: 600;
 }
 
-.user-avatar {
+.site-header .user-avatar {
   display: grid;
   place-items: center;
   flex-shrink: 0;
-
   width: 1.95rem;
   height: 1.95rem;
-
   border: 1px solid var(--hdr-sage-line);
   border-radius: 50%;
-
   background: var(--hdr-sage);
   color: var(--hdr-forest);
-
   font-size: 0.76rem;
   font-weight: 600;
 }
 
-.greeting-text {
+.site-header .greeting-text {
   max-width: 9.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.header-logout {
+.site-header .header-logout {
   padding: 0.4rem 0;
-
   border: 0;
   background: none;
-
   color: var(--hdr-ink-soft);
   font-family: var(--hdr-font-ui);
   font-size: 0.78rem;
   font-weight: 500;
-
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
-.header-logout:hover,
-.header-logout:focus-visible {
+.site-header .header-logout:hover,
+.site-header .header-logout:focus-visible {
   color: var(--hdr-forest);
 }
 
 /* ---------- Acessibilidade ---------- */
 
-.header-brand:focus-visible,
-.header-navigation a:focus-visible,
-.header-login:focus-visible,
-.header-register:focus-visible,
-.header-cart:focus-visible,
-.header-logout:focus-visible,
-.header-toggle:focus-visible {
+.site-header .header-brand:focus-visible,
+.site-header .header-navigation a:focus-visible,
+.site-header .header-login:focus-visible,
+.site-header .header-register:focus-visible,
+.site-header .header-cart:focus-visible,
+.site-header .header-logout:focus-visible,
+.site-header .header-toggle:focus-visible {
   outline: 2px solid var(--hdr-forest);
   outline-offset: 4px;
 }
 
 /* ---------- Menu mobile ---------- */
 
-.header-toggle {
+.site-header .header-toggle {
   display: none;
   position: relative;
-
   width: 2.5rem;
   height: 2.5rem;
   padding: 0;
-
   border: 1px solid var(--hdr-sage-line);
   border-radius: 50%;
-
   background: transparent;
   cursor: pointer;
 }
 
-.toggle-line {
+.site-header .toggle-line {
   position: absolute;
   left: 50%;
   top: 50%;
-
   width: 1rem;
   height: 1.5px;
   margin-left: -0.5rem;
-
   border-radius: 2px;
   background: var(--hdr-ink);
-
   transition: transform 0.3s ease;
 }
 
-.toggle-line:nth-child(1) {
+.site-header .toggle-line:nth-child(1) {
   margin-top: -4px;
 }
 
-.toggle-line:nth-child(2) {
+.site-header .toggle-line:nth-child(2) {
   margin-top: 2.5px;
 }
 
@@ -589,17 +516,17 @@
    ========================================================= */
 
 @media (min-width: 1081px) and (max-width: 1279px) {
-  .header-bar {
+  .site-header .header-bar {
     column-gap: 1rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 
-  .header-navigation {
+  .site-header .header-navigation {
     gap: 1.6rem;
   }
 
-  .header-navigation a {
+  .site-header .header-navigation a {
     font-size: 0.7rem;
   }
 
@@ -613,45 +540,39 @@
    ========================================================= */
 
 @media (max-width: 1080px) {
-  .header-bar {
+  .site-header .header-bar {
     grid-template-columns: minmax(0, 1fr) auto auto;
     column-gap: 1rem;
     height: 4.6rem;
     padding: 0 clamp(1.2rem, 3.5vw, 2rem);
   }
 
-  .header-toggle {
+  .site-header .header-toggle {
     display: inline-block;
   }
 
   .site-header .header-cart .cart-label,
-  .header-action-divider {
+  .site-header .header-action-divider {
     display: none;
   }
 
-  .header-navigation {
+  .site-header .header-navigation {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     gap: 0;
-
     padding: 0.5rem clamp(1.4rem, 4vw, 2.5rem) 1.2rem;
-
     background: var(--hdr-bg);
     border-bottom: 1px solid var(--hdr-line);
-
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-
     transform: translateY(-0.4rem);
-
     transition:
       opacity 0.25s ease,
       transform 0.25s ease,
@@ -663,37 +584,33 @@
     visibility: visible;
     pointer-events: auto;
     transform: translateY(0);
-
     transition:
       opacity 0.25s ease,
       transform 0.25s ease,
       visibility 0s;
   }
 
-  .header-navigation a {
+  .site-header .header-navigation a {
     min-height: 3.2rem;
     padding: 0.3rem 0;
-
     border-bottom: 1px solid var(--hdr-line);
     font-size: 0.78rem;
   }
 
-  .header-navigation a:last-child {
+  .site-header .header-navigation a:last-child {
     border-bottom: 0;
   }
 
-  .header-navigation a::after {
+  .site-header .header-navigation a::after {
     display: none;
   }
 
-  .header-navigation a.active::before {
+  .site-header .header-navigation a.active::before {
     content: '';
     flex-shrink: 0;
-
     width: 0.45rem;
     height: 0.45rem;
     margin-right: 0.8rem;
-
     border-radius: 0 100% 0 100%;
     background: var(--hdr-olive);
   }
@@ -704,20 +621,20 @@
    ========================================================= */
 
 @media (max-width: 640px) {
-  .header-bar {
+  .site-header .header-bar {
     column-gap: 0.7rem;
     padding: 0 1rem;
   }
 
-  .brand-name {
+  .site-header .brand-name {
     font-size: 1.55rem;
   }
 
-  .header-actions {
+  .site-header .header-actions {
     gap: 0.7rem;
   }
 
-  .header-account {
+  .site-header .header-account {
     gap: 0.7rem;
   }
 
@@ -731,20 +648,18 @@
     font-size: 0.76rem;
   }
 
-  .cart-icon {
+  .site-header .cart-icon {
     width: 2.25rem;
     height: 2.25rem;
   }
 
-  .user-avatar + .greeting-text {
+  .site-header .user-avatar + .greeting-text {
     display: none;
   }
 }
 
 /* =========================================================
    MOBILE PEQUENO
-   Barra enxuta: marca + sacola + usuário + menu.
-   "Criar conta" passa para dentro do menu.
    ========================================================= */
 
 @media (max-width: 480px) {
@@ -763,15 +678,13 @@
   .site-header .header-login .login-icon {
     display: grid;
     place-items: center;
-
     width: 2.25rem;
     height: 2.25rem;
-
     border-radius: 50%;
     background: var(--hdr-sage);
   }
 
-  .header-login .login-icon svg {
+  .site-header .header-login .login-icon svg {
     width: 1.15rem;
     height: 1.15rem;
   }
@@ -781,16 +694,13 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-
     min-height: 2.8rem;
     margin-top: 0.9rem;
     padding: 0 1.3rem;
-
     border: 1px solid var(--hdr-forest);
     border-radius: 999px;
     background: var(--hdr-forest);
     color: var(--hdr-bg);
-
     font-family: var(--hdr-font-ui);
     font-size: 0.86rem;
     font-weight: 500;
@@ -818,31 +728,30 @@
 /* ---------- Telas menores ---------- */
 
 @media (max-width: 420px) {
-  .header-bar {
+  .site-header .header-bar {
     column-gap: 0.45rem;
     padding: 0 0.75rem;
   }
 
-  .brand-kicker {
+  .site-header .brand-kicker {
     display: none;
   }
 
-  .brand-name {
+  .site-header .brand-name {
     font-size: 1.38rem;
   }
 
-  .header-actions {
+  .site-header .header-actions {
     gap: 0.5rem;
   }
 
-  .header-toggle {
+  .site-header .header-toggle {
     width: 2.3rem;
     height: 2.3rem;
   }
 }
 
 /* ---------- Movimento reduzido ---------- */
-/* Único !important que permanece: é intencional, precisa vencer tudo. */
 
 @media (prefers-reduced-motion: reduce) {
   .site-header *,

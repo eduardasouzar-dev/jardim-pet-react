@@ -1,0 +1,38 @@
+
+/* =========================================================
+   JARDIM PET — DESIGN TOKENS
+   Identidade: Botanical Contemporary
+   ========================================================= */
+
+:root {
+  /* Cores principais */
+  --color-background: #F8F3E8;
+  --color-surface: #FFFCF5;
+  --color-olive: #7E9460;
+  --color-olive-dark: #4B6340;
+  --color-olive-deep: #38502F;
+
+  /* Textos */
+  --color-text: #2F3628;
+  --color-text-soft: #6B6F5C;
+  --color-text-muted: #756C4E;
+
+  /* Detalhes */
+  --color-accent: #D18A43;
+  --color-border: #DDD8C9;
+
+  /* Tipografia */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+
+  /* Layout */
+  --container-width: 1320px;
+  --page-gutter: 5%;
+  --radius-small: 8px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+
+  /* Transições */
+  --transition-fast: 180ms ease;
+  --transition-normal: 280ms ease;
+}

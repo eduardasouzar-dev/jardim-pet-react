@@ -25,19 +25,16 @@ function ArrowIcon() {
 function Home() {
   return (
     <main className="home">
-      {/* HERO */}
+      {/* HERO PRINCIPAL */}
       <section className="hero">
         <div className="hero-visual">
-          <img
-            className="hero-image"
-            src="/images/jardim-pet-hero-direita-v2.jpg"
-            alt="Cachorro caramelo em um ambiente acolhedor cercado por plantas"
-            decoding="async"
-          />
-
-          <div className="hero-image-caption">
-            <span className="caption-dot" />
-            <span>Bem-estar que começa em casa.</span>
+          <div className="hero-photo hero-photo-pet">
+            <img
+              className="hero-image"
+              src="/images/jardim-pet-hero-direita-v2.jpg"
+              alt="Cachorro caramelo em um ambiente acolhedor cercado por plantas"
+              decoding="async"
+            />
           </div>
         </div>
 
@@ -97,24 +94,31 @@ function Home() {
               <ArrowIcon />
             </Link>
           </div>
-
-          <div className="hero-signature">
-            <span className="hero-signature-symbol" aria-hidden="true" />
-            <span>Cuidado que faz parte de todos os dias.</span>
-          </div>
         </div>
       </section>
 
       {/* SEGUNDA SEÇÃO — NOSSO JARDIM */}
       <section className="home-intro">
-        <div className="home-intro-image-wrap">
-          <img
-            className="home-intro-image"
-            src="/images/home-jardim.jpg"
-            alt="Plantas naturais compondo um ambiente acolhedor"
-            loading="lazy"
-            decoding="async"
-          />
+        <div className="home-intro-media">
+          <div className="home-intro-image-wrap home-intro-image-main">
+            <img
+              className="home-intro-image"
+              src="/images/home-jardim-2.jpg"
+              alt="Planta em um ambiente residencial iluminado"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div className="home-intro-image-wrap home-intro-image-secondary">
+            <img
+              className="home-intro-image"
+              src="/images/hero-2.jpg"
+              alt="Folhagem de Monstera em destaque"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
 
         <div className="home-intro-content">
@@ -131,10 +135,10 @@ function Home() {
           </h2>
 
           <p>
-            Um toque de verde pode transformar a atmosfera
-            de um ambiente. Descubra plantas e detalhes
-            que aproximam a natureza da sua casa e tornam
-            cada espaço ainda mais especial.
+            Plantas têm o poder de transformar ambientes
+            e trazer mais vida para a rotina. Descubra
+            espécies e detalhes que aproximam a natureza
+            da sua casa.
           </p>
 
           <Link
