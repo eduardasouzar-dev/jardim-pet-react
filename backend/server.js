@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const express = require("express");
@@ -68,7 +67,7 @@ function identificarClienteOpcional(req, res, next) {
 // ==========================================
 
 app.get("/api/status", (req, res) => {
-  res.json({
+  return res.status(200).json({
     mensagem: "Back-end do Jardim Pet funcionando!",
     status: "online",
   });
@@ -85,7 +84,7 @@ app.get("/api/banco", async (req, res) => {
       "SELECT DATABASE() AS banco, VERSION() AS versao"
     );
 
-    res.json({
+    return res.status(200).json({
       mensagem: "Conexão com o MySQL funcionando!",
       banco: resultado[0].banco,
       versao: resultado[0].versao,
@@ -93,7 +92,7 @@ app.get("/api/banco", async (req, res) => {
   } catch (erro) {
     console.error("Erro ao conectar ao MySQL:", erro.message);
 
-    res.status(500).json({
+    return res.status(500).json({
       mensagem: "Não foi possível conectar ao banco de dados.",
     });
   }
@@ -107,43 +106,55 @@ app.get("/api/banco", async (req, res) => {
 app.get("/api/produtos", async (req, res) => {
   try {
     const [produtos] = await pool.query(
-      `SELECT id, nome, descricao, preco, categoria, estoque, imagem
+      `SELECT
+        id,
+        nome,
+        descricao,
+        preco,
+        categoria,
+        subcategoria,
+        estoque,
+        imagem
        FROM produtos
        WHERE ativo = TRUE
        ORDER BY id`
     );
 
-    res.json(produtos);
+    return res.status(200).json(produtos);
   } catch (erro) {
     console.error("Erro ao buscar produtos:", erro.message);
 
-    res.status(500).json({
+    return res.status(500).json({
       mensagem: "Não foi possível buscar os produtos.",
     });
   }
 });
 
+// ==========================================
+// BUSCAR UM PRODUTO PELO ID
+// GET /api/produtos/:id
+// ==========================================
 
-
-/**
- * Rota para buscar um produto pelo ID
- * GET /api/produtos/:id
- */
 app.get("/api/produtos/:id", async (req, res) => {
   try {
     const id = Number(req.params.id);
 
-    // Valida o ID
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         mensagem: "Informe um ID de produto válido.",
       });
     }
 
-    // Busca somente produtos ativos
     const [produtos] = await pool.execute(
-      `SELECT id, nome, descricao, preco, categoria,
-              estoque, imagem
+      `SELECT
+        id,
+        nome,
+        descricao,
+        preco,
+        categoria,
+        subcategoria,
+        estoque,
+        imagem
        FROM produtos
        WHERE id = ? AND ativo = TRUE`,
       [id]
@@ -156,7 +167,6 @@ app.get("/api/produtos/:id", async (req, res) => {
     }
 
     return res.status(200).json(produtos[0]);
-
   } catch (erro) {
     console.error("Erro ao buscar produto:", erro.message);
 
@@ -165,7 +175,6 @@ app.get("/api/produtos/:id", async (req, res) => {
     });
   }
 });
-
 
 // ==========================================
 // ROTA 4 - CADASTRAR PRODUTO
@@ -179,6 +188,7 @@ app.post("/api/produtos", async (req, res) => {
       descricao,
       preco,
       categoria,
+      subcategoria,
       estoque,
       imagem,
     } = req.body;
@@ -200,6 +210,22 @@ app.post("/api/produtos", async (req, res) => {
       });
     }
 
+    // Valida a subcategoria, quando informada
+    if (
+      subcategoria !== undefined &&
+      subcategoria !== null &&
+      typeof subcategoria !== "string"
+    ) {
+      return res.status(400).json({
+        mensagem: "A subcategoria deve ser um texto.",
+      });
+    }
+
+    const subcategoriaNormalizada =
+      typeof subcategoria === "string" && subcategoria.trim()
+        ? subcategoria.trim()
+        : null;
+
     // Valida o estoque
     const quantidadeEstoque = Number(estoque ?? 0);
 
@@ -216,8 +242,8 @@ app.post("/api/produtos", async (req, res) => {
     // Insere o produto no banco de dados
     const [resultado] = await pool.execute(
       `INSERT INTO produtos
-        (nome, descricao, preco, categoria, estoque, imagem)
-       VALUES (?, ?, ?, ?, ?, ?)`,
+        (nome, descricao, preco, categoria, subcategoria, estoque, imagem)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         nome.trim(),
         typeof descricao === "string" && descricao.trim()
@@ -225,6 +251,7 @@ app.post("/api/produtos", async (req, res) => {
           : null,
         Number(preco),
         categoria,
+        subcategoriaNormalizada,
         quantidadeEstoque,
         typeof imagem === "string" && imagem.trim()
           ? imagem.trim()
@@ -232,7 +259,6 @@ app.post("/api/produtos", async (req, res) => {
       ]
     );
 
-    // Retorna o produto cadastrado
     return res.status(201).json({
       mensagem: "Produto cadastrado com sucesso!",
       produto: {
@@ -244,6 +270,7 @@ app.post("/api/produtos", async (req, res) => {
             : null,
         preco: Number(preco).toFixed(2),
         categoria,
+        subcategoria: subcategoriaNormalizada,
         estoque: quantidadeEstoque,
         imagem:
           typeof imagem === "string" && imagem.trim()
@@ -260,15 +287,15 @@ app.post("/api/produtos", async (req, res) => {
   }
 });
 
-/**
- * Rota para cadastrar um cliente
- * POST /api/clientes
- */
+// ==========================================
+// CADASTRAR CLIENTE
+// POST /api/clientes
+// ==========================================
+
 app.post("/api/clientes", async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
 
-    // Validação dos campos
     if (
       typeof nome !== "string" ||
       !nome.trim() ||
@@ -283,10 +310,8 @@ app.post("/api/clientes", async (req, res) => {
       });
     }
 
-    // Padroniza o e-mail
     const emailNormalizado = email.trim().toLowerCase();
 
-    // Verifica se o e-mail já está cadastrado
     const [clientesExistentes] = await pool.execute(
       "SELECT id FROM clientes WHERE email = ?",
       [emailNormalizado]
@@ -298,10 +323,8 @@ app.post("/api/clientes", async (req, res) => {
       });
     }
 
-    // Protege a senha com bcrypt
     const senhaHash = await bcrypt.hash(senha, 10);
 
-    // Salva o cliente no banco de dados
     const [resultado] = await pool.execute(
       `INSERT INTO clientes (nome, email, senha)
        VALUES (?, ?, ?)`,
@@ -316,7 +339,6 @@ app.post("/api/clientes", async (req, res) => {
         email: emailNormalizado,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao cadastrar cliente:", erro.message);
 
@@ -326,15 +348,15 @@ app.post("/api/clientes", async (req, res) => {
   }
 });
 
-/**
- * Rota para realizar login de um cliente
- * POST /api/clientes/login
- */
+// ==========================================
+// LOGIN DE CLIENTE
+// POST /api/clientes/login
+// ==========================================
+
 app.post("/api/clientes/login", async (req, res) => {
   try {
     const { email, senha } = req.body;
 
-    // Valida os campos recebidos
     if (
       typeof email !== "string" ||
       !email.trim() ||
@@ -346,10 +368,8 @@ app.post("/api/clientes/login", async (req, res) => {
       });
     }
 
-    // Padroniza o e-mail
     const emailNormalizado = email.trim().toLowerCase();
 
-    // Busca o cliente pelo e-mail
     const [clientes] = await pool.execute(
       `SELECT id, nome, email, senha
        FROM clientes
@@ -365,7 +385,6 @@ app.post("/api/clientes/login", async (req, res) => {
 
     const cliente = clientes[0];
 
-    // Compara a senha informada com o hash salvo
     const senhaCorreta = await bcrypt.compare(
       senha,
       cliente.senha
@@ -377,7 +396,6 @@ app.post("/api/clientes/login", async (req, res) => {
       });
     }
 
-    // Gera o token de autenticação
     const token = jwt.sign(
       {
         id: cliente.id,
@@ -398,7 +416,6 @@ app.post("/api/clientes/login", async (req, res) => {
         email: cliente.email,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao realizar login:", erro.message);
 
@@ -408,16 +425,15 @@ app.post("/api/clientes/login", async (req, res) => {
   }
 });
 
+// ==========================================
+// LOGIN DE ADMINISTRADOR
+// POST /api/administradores/login
+// ==========================================
 
-/**
- * Rota para realizar login de um administrador
- * POST /api/administradores/login
- */
 app.post("/api/administradores/login", async (req, res) => {
   try {
     const { email, senha } = req.body;
 
-    // Valida os campos recebidos
     if (
       typeof email !== "string" ||
       !email.trim() ||
@@ -429,10 +445,8 @@ app.post("/api/administradores/login", async (req, res) => {
       });
     }
 
-    // Padroniza o e-mail
     const emailNormalizado = email.trim().toLowerCase();
 
-    // Busca o administrador pelo e-mail
     const [administradores] = await pool.execute(
       `SELECT id, nome, email, senha
        FROM administradores
@@ -448,7 +462,6 @@ app.post("/api/administradores/login", async (req, res) => {
 
     const administrador = administradores[0];
 
-    // Compara a senha informada com o hash salvo
     const senhaCorreta = await bcrypt.compare(
       senha,
       administrador.senha
@@ -460,7 +473,6 @@ app.post("/api/administradores/login", async (req, res) => {
       });
     }
 
-    // Gera o token de autenticação administrativa
     const token = jwt.sign(
       {
         id: administrador.id,
@@ -482,7 +494,6 @@ app.post("/api/administradores/login", async (req, res) => {
         email: administrador.email,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao realizar login administrativo:", erro.message);
 
@@ -492,11 +503,11 @@ app.post("/api/administradores/login", async (req, res) => {
   }
 });
 
+// ==========================================
+// PERFIL DO CLIENTE
+// GET /api/clientes/perfil
+// ==========================================
 
-/**
- * Rota protegida para consultar o perfil do cliente
- * GET /api/clientes/perfil
- */
 app.get("/api/clientes/perfil", autenticarCliente, async (req, res) => {
   try {
     const [clientes] = await pool.execute(
@@ -516,7 +527,6 @@ app.get("/api/clientes/perfil", autenticarCliente, async (req, res) => {
       mensagem: "Acesso autorizado!",
       cliente: clientes[0],
     });
-
   } catch (erro) {
     console.error("Erro ao buscar perfil:", erro.message);
 
@@ -526,11 +536,11 @@ app.get("/api/clientes/perfil", autenticarCliente, async (req, res) => {
   }
 });
 
+// ==========================================
+// CADASTRAR PET
+// POST /api/pets
+// ==========================================
 
-/**
- * Rota para cadastrar um pet
- * POST /api/pets
- */
 app.post("/api/pets", autenticarCliente, async (req, res) => {
   try {
     const {
@@ -541,7 +551,6 @@ app.post("/api/pets", autenticarCliente, async (req, res) => {
       observacoes,
     } = req.body;
 
-    // Valida os campos obrigatórios
     if (
       typeof nome !== "string" ||
       !nome.trim() ||
@@ -552,7 +561,6 @@ app.post("/api/pets", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Valida os campos opcionais
     if (
       raca !== undefined &&
       raca !== null &&
@@ -573,7 +581,6 @@ app.post("/api/pets", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Cadastra o pet vinculado ao cliente autenticado
     const [resultado] = await pool.execute(
       `INSERT INTO pets
        (cliente_id, nome, especie, raca, data_nascimento, observacoes)
@@ -600,7 +607,6 @@ app.post("/api/pets", autenticarCliente, async (req, res) => {
         observacoes: observacoes?.trim() || null,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao cadastrar pet:", erro.message);
 
@@ -610,16 +616,22 @@ app.post("/api/pets", autenticarCliente, async (req, res) => {
   }
 });
 
+// ==========================================
+// LISTAR PETS DO CLIENTE
+// GET /api/pets
+// ==========================================
 
-/**
- * Rota para listar os pets do cliente autenticado
- * GET /api/pets
- */
 app.get("/api/pets", autenticarCliente, async (req, res) => {
   try {
     const [pets] = await pool.execute(
-      `SELECT id, nome, especie, raca, data_nascimento,
-              observacoes, criado_em
+      `SELECT
+        id,
+        nome,
+        especie,
+        raca,
+        data_nascimento,
+        observacoes,
+        criado_em
        FROM pets
        WHERE cliente_id = ? AND ativo = TRUE
        ORDER BY criado_em DESC`,
@@ -631,7 +643,6 @@ app.get("/api/pets", autenticarCliente, async (req, res) => {
       quantidade: pets.length,
       pets,
     });
-
   } catch (erro) {
     console.error("Erro ao listar pets:", erro.message);
 
@@ -641,13 +652,13 @@ app.get("/api/pets", autenticarCliente, async (req, res) => {
   }
 });
 
-/**
- * Rota para atualizar os dados de um pet
- * PUT /api/pets/:id
- */
+// ==========================================
+// ATUALIZAR PET
+// PUT /api/pets/:id
+// ==========================================
+
 app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
   try {
-    // Obtém e valida o ID do pet
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id) || id <= 0) {
@@ -656,14 +667,13 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Busca o pet pertencente ao cliente autenticado
     const [pets] = await pool.execute(
       `SELECT id, nome, especie, raca, data_nascimento, observacoes
        FROM pets
        WHERE id = ? AND cliente_id = ? AND ativo = TRUE`,
       [id, req.cliente.id]
     );
-    // Verifica se o pet foi encontrado
+
     if (pets.length === 0) {
       return res.status(404).json({
         mensagem: "Pet não encontrado.",
@@ -672,7 +682,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
 
     const petAtual = pets[0];
 
-    // Recebe os dados enviados
     const {
       nome,
       especie,
@@ -681,7 +690,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
       observacoes,
     } = req.body;
 
-    // Mantém os dados atuais quando não forem enviados
     const novoNome = nome === undefined ? petAtual.nome : nome;
 
     const novaEspecie =
@@ -700,7 +708,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
         ? petAtual.observacoes
         : observacoes;
 
-    // Valida nome e espécie
     if (
       typeof novoNome !== "string" ||
       !novoNome.trim() ||
@@ -711,7 +718,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Valida raça
     if (
       novaRaca !== null &&
       novaRaca !== undefined &&
@@ -722,7 +728,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Valida observações
     if (
       novasObservacoes !== null &&
       novasObservacoes !== undefined &&
@@ -733,7 +738,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Atualiza o pet no banco de dados
     await pool.execute(
       `UPDATE pets
        SET nome = ?, especie = ?, raca = ?,
@@ -761,7 +765,6 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
         observacoes: novasObservacoes?.trim() || null,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao atualizar pet:", erro.message);
 
@@ -771,16 +774,13 @@ app.put("/api/pets/:id", autenticarCliente, async (req, res) => {
   }
 });
 
-/**
- * Rota para excluir um pet
- * DELETE /api/pets/:id
- *
- * Realiza uma exclusão lógica:
- * o pet continua no banco, mas fica inativo.
- */
+// ==========================================
+// EXCLUIR PET
+// DELETE /api/pets/:id
+// ==========================================
+
 app.delete("/api/pets/:id", autenticarCliente, async (req, res) => {
   try {
-    // Obtém e valida o ID do pet
     const id = Number(req.params.id);
 
     if (!Number.isInteger(id) || id <= 0) {
@@ -789,11 +789,10 @@ app.delete("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Verifica se o pet pertence ao cliente autenticado
     const [pets] = await pool.execute(
       `SELECT id
        FROM pets
-       WHERE id = ? AND cliente_id = ?`,
+       WHERE id = ? AND cliente_id = ? AND ativo = TRUE`,
       [id, req.cliente.id]
     );
 
@@ -803,7 +802,6 @@ app.delete("/api/pets/:id", autenticarCliente, async (req, res) => {
       });
     }
 
-    // Desativa o pet sem apagar seu registro
     await pool.execute(
       `UPDATE pets
        SET ativo = FALSE
@@ -813,9 +811,8 @@ app.delete("/api/pets/:id", autenticarCliente, async (req, res) => {
 
     return res.status(200).json({
       mensagem: "Pet excluído com sucesso!",
-      id: id,
+      id,
     });
-
   } catch (erro) {
     console.error("Erro ao excluir pet:", erro.message);
 
@@ -824,30 +821,22 @@ app.delete("/api/pets/:id", autenticarCliente, async (req, res) => {
     });
   }
 });
+
 // ==========================================
-// ROTA 6 - EXCLUIR PRODUTO
+// EXCLUIR PRODUTO
 // DELETE /api/produtos/:id
 // ==========================================
 
-/**
- * Rota para excluir um produto
- *
- * Realiza uma exclusão lógica:
- * o produto continua no banco, mas fica inativo.
- */
 app.delete("/api/produtos/:id", async (req, res) => {
   try {
-    // Obtém o ID enviado pela URL
     const id = Number(req.params.id);
 
-    // Valida o ID
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         mensagem: "Informe um ID de produto válido.",
       });
     }
 
-    // Verifica se o produto existe e está ativo
     const [produtos] = await pool.execute(
       `SELECT id
        FROM produtos
@@ -861,7 +850,6 @@ app.delete("/api/produtos/:id", async (req, res) => {
       });
     }
 
-        // Desativa o produto sem apagar seu registro
     await pool.execute(
       `UPDATE produtos
        SET ativo = FALSE
@@ -871,9 +859,8 @@ app.delete("/api/produtos/:id", async (req, res) => {
 
     return res.status(200).json({
       mensagem: "Produto excluído com sucesso!",
-      id: id,
+      id,
     });
-
   } catch (erro) {
     console.error("Erro ao excluir produto:", erro.message);
 
@@ -882,7 +869,6 @@ app.delete("/api/produtos/:id", async (req, res) => {
     });
   }
 });
-
 
 // ==========================================
 // CRIAR PEDIDO (CLIENTE LOGADO OU VISITANTE)
@@ -895,7 +881,11 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
   try {
     const { comprador, itens } = req.body;
 
-    if (!comprador || typeof comprador !== "object" || Array.isArray(comprador)) {
+    if (
+      !comprador ||
+      typeof comprador !== "object" ||
+      Array.isArray(comprador)
+    ) {
       return res.status(400).json({
         mensagem: "Informe os dados do comprador.",
       });
@@ -966,7 +956,6 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
 
       nomeCliente = clientes[0].nome;
       emailCliente = clientes[0].email;
-
     } else {
       // Compra como visitante
       nomeCliente = comprador.nome?.trim();
@@ -978,6 +967,7 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
         });
       }
 
+      // Valida o formato do e-mail
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailCliente)) {
         return res.status(400).json({
           mensagem: "Informe um e-mail válido.",
@@ -999,7 +989,8 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
         quantidade <= 0
       ) {
         return res.status(400).json({
-          mensagem: "Existe um produto ou uma quantidade inválida no pedido.",
+          mensagem:
+            "Existe um produto ou uma quantidade inválida no pedido.",
         });
       }
 
@@ -1100,6 +1091,7 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
     // Registra os itens e reserva o estoque
     for (const produto of produtos) {
       const quantidade = produtosSolicitados.get(produto.id);
+
       const precoUnitario = (
         Math.round(Number(produto.preco) * 100) / 100
       ).toFixed(2);
@@ -1143,7 +1135,6 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
         status: "pendente",
       },
     });
-
   } catch (erro) {
     if (conexao) {
       await conexao.rollback();
@@ -1160,7 +1151,6 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
     return res.status(conflito ? 409 : 500).json({
       mensagem: erro.message || "Não foi possível registrar o pedido.",
     });
-
   } finally {
     if (conexao) {
       conexao.release();
@@ -1168,11 +1158,11 @@ app.post("/api/pedidos", identificarClienteOpcional, async (req, res) => {
   }
 });
 
+// ==========================================
+// LISTAR PEDIDOS DO CLIENTE
+// GET /api/clientes/pedidos
+// ==========================================
 
-/**
- * Lista os pedidos do cliente autenticado
- * GET /api/clientes/pedidos
- */
 app.get("/api/clientes/pedidos", autenticarCliente, async (req, res) => {
   try {
     const clienteId = req.cliente.id;
@@ -1227,7 +1217,6 @@ app.get("/api/clientes/pedidos", autenticarCliente, async (req, res) => {
     return res.status(200).json({
       pedidos: Array.from(pedidosOrganizados.values()),
     });
-
   } catch (erro) {
     console.error("Erro ao listar pedidos:", erro.message);
 
@@ -1237,11 +1226,11 @@ app.get("/api/clientes/pedidos", autenticarCliente, async (req, res) => {
   }
 });
 
+// ==========================================
+// CONSULTAR PEDIDO DO CLIENTE
+// GET /api/pedidos/:id
+// ==========================================
 
-/**
- * Consulta um pedido específico do cliente autenticado
- * GET /api/pedidos/:id
- */
 app.get("/api/pedidos/:id", autenticarCliente, async (req, res) => {
   try {
     const pedidoId = Number(req.params.id);
@@ -1300,7 +1289,6 @@ app.get("/api/pedidos/:id", autenticarCliente, async (req, res) => {
         itens,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao consultar pedido:", erro.message);
 
@@ -1319,7 +1307,6 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
   try {
     const { pedido_id, email } = req.body;
 
-    // Valida o número do pedido
     const pedidoId = Number(pedido_id);
 
     if (!Number.isSafeInteger(pedidoId) || pedidoId <= 0) {
@@ -1328,7 +1315,6 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
       });
     }
 
-    // Valida o e-mail
     if (typeof email !== "string" || !email.trim()) {
       return res.status(400).json({
         mensagem: "Informe o e-mail utilizado na compra.",
@@ -1337,13 +1323,13 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
 
     const emailNormalizado = email.trim().toLowerCase();
 
+    // Valida o formato do e-mail
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailNormalizado)) {
       return res.status(400).json({
         mensagem: "Informe um e-mail válido.",
       });
     }
 
-    // Busca somente pedidos realizados por visitantes
     const [pedidos] = await pool.execute(
       `SELECT
         id,
@@ -1361,11 +1347,11 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
 
     if (pedidos.length === 0) {
       return res.status(404).json({
-        mensagem: "Pedido não encontrado. Confira o número e o e-mail informado.",
+        mensagem:
+          "Pedido não encontrado. Confira o número e o e-mail informado.",
       });
     }
 
-    // Busca os produtos do pedido
     const [itens] = await pool.execute(
       `SELECT
         ip.id,
@@ -1386,7 +1372,6 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
         itens,
       },
     });
-
   } catch (erro) {
     console.error("Erro ao consultar pedido de visitante:", erro.message);
 
@@ -1396,32 +1381,31 @@ app.post("/api/pedidos/consultar-visitante", async (req, res) => {
   }
 });
 
+// ==========================================
+// ATUALIZAR STATUS DO PEDIDO
+// PUT /api/pedidos/:id/status
+// ACESSO DE ADMINISTRADOR
+// ==========================================
 
-/**
- * Atualiza o status de um pedido
- * PUT /api/pedidos/:id/status
- *
- * Acesso exclusivo de administradores.
- * Ao cancelar, devolve os produtos ao estoque.
- */
 app.put(
   "/api/pedidos/:id/status",
   autenticarAdministrador,
   async (req, res) => {
-    const conexao = await pool.getConnection();
+    let conexao;
 
     try {
+      // Obtém a conexão dentro do try para tratar possíveis falhas
+      conexao = await pool.getConnection();
+
       const pedidoId = Number(req.params.id);
       const { status } = req.body;
 
-      // Valida o ID do pedido
       if (!Number.isSafeInteger(pedidoId) || pedidoId <= 0) {
         return res.status(400).json({
           mensagem: "ID do pedido inválido.",
         });
       }
 
-      // Valida os status permitidos
       const statusPermitidos = [
         "confirmado",
         "enviado",
@@ -1440,7 +1424,6 @@ app.put(
 
       await conexao.beginTransaction();
 
-      // Busca e bloqueia o pedido durante a transação
       const [pedidos] = await conexao.execute(
         `SELECT id, status
          FROM pedidos
@@ -1459,7 +1442,6 @@ app.put(
 
       const statusAtual = pedidos[0].status;
 
-      // Define as transições permitidas
       const transicoesPermitidas = {
         pendente: ["confirmado", "cancelado"],
         confirmado: ["enviado", "cancelado"],
@@ -1468,15 +1450,16 @@ app.put(
         cancelado: [],
       };
 
-      if (!transicoesPermitidas[statusAtual].includes(status)) {
+      if (!transicoesPermitidas[statusAtual]?.includes(status)) {
         await conexao.rollback();
 
         return res.status(400).json({
-          mensagem: `Não é permitido alterar o pedido de ${statusAtual} para ${status}.`,
+          mensagem:
+            `Não é permitido alterar o pedido de ${statusAtual} para ${status}.`,
         });
       }
 
-      // Se o pedido for cancelado, devolve os produtos ao estoque
+      // Ao cancelar, devolve os produtos ao estoque
       if (status === "cancelado") {
         const [itens] = await conexao.execute(
           `SELECT produto_id, quantidade
@@ -1495,7 +1478,6 @@ app.put(
         }
       }
 
-      // Atualiza o status do pedido
       await conexao.execute(
         `UPDATE pedidos
          SET status = ?
@@ -1513,9 +1495,10 @@ app.put(
           status_atual: status,
         },
       });
-
     } catch (erro) {
-      await conexao.rollback();
+      if (conexao) {
+        await conexao.rollback();
+      }
 
       console.error(
         "Erro ao atualizar status do pedido:",
@@ -1525,13 +1508,13 @@ app.put(
       return res.status(500).json({
         mensagem: "Não foi possível atualizar o status do pedido.",
       });
-
     } finally {
-      conexao.release();
+      if (conexao) {
+        conexao.release();
+      }
     }
   }
 );
-
 
 // ==========================================
 // INICIA O SERVIDOR
