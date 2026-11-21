@@ -3,13 +3,6 @@ import { useEffect, useState } from 'react'
 
 const API_URL = 'http://localhost:3001/api/produtos'
 
-const productTypes = {
-  'Caminha Aconchego': 'Camas e conforto',
-  'Brinquedo Mordedor': 'Brinquedos',
-  'Vaso de Cerâmica': 'Vasos e acessórios',
-  Jiboia: 'Plantas',
-}
-
 function useProducts() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -30,7 +23,7 @@ function useProducts() {
           id: product.id,
           name: product.nome,
           category: product.categoria,
-          type: productTypes[product.nome] || 'Outros',
+          type: product.subcategoria || 'Outros',
           price: Number(product.preco),
           description: product.descricao || '',
           image: product.imagem || '',

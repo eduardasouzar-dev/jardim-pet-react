@@ -16,7 +16,19 @@ function ProductCard({ product }) {
           aria-label={`Ver detalhes de ${product.name}`}
         >
           <div className="product-card-image">
-            <span>
+            {product.image ? (
+              <img
+                src={product.image}
+                alt={product.name}
+                loading="lazy"
+              />
+            ) : (
+              <span className="product-image-fallback">
+                Imagem indisponível
+              </span>
+            )}
+
+            <span className="product-card-label">
               {product.category === 'pet' ? 'Mundo Pet' : 'Nosso Jardim'}
             </span>
           </div>

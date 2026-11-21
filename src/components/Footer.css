@@ -1,31 +1,23 @@
+
 /* =========================================================
    JARDIM PET — FOOTER
-   Identidade: Botanical Contemporary
-
-   Tipografia:
-   - Fraunces → marca e frase institucional
-   - Figtree  → títulos de coluna, links, botões e rodapé inferior
+   Botanical Contemporary
    ========================================================= */
-
-
-/* ---------- TOKENS ---------- */
 
 .site-footer {
   --footer-bg: #38502F;
   --footer-ink: #F8F3E8;
-  --footer-ink-soft: #DCE3D1;
-  --footer-sage: #B9C99A;
-  --footer-olive: #8DAA61;
+  --footer-ink-soft: #E2E7D9;
+  --footer-sage: #C1D0A5;
+  --footer-olive: #A7BC7C;
   --footer-clay: #D18A43;
-  --footer-line: rgba(248, 243, 232, 0.20);
+  --footer-line: rgba(248, 243, 232, 0.22);
 
-  /* Mesma largura e margem lateral do conteúdo da Home.
-     Se o Header usar outros valores, ajuste só aqui. */
   --footer-max: 1320px;
   --footer-gutter: 3rem;
 
   --footer-font-display: 'Fraunces', Georgia, serif;
-  --footer-font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --footer-font-ui: 'Figtree', system-ui, sans-serif;
 
   width: 100%;
   background: var(--footer-bg);
@@ -39,38 +31,41 @@
   box-sizing: border-box;
 }
 
-
 /* =========================================================
    CONTEÚDO PRINCIPAL
    ========================================================= */
 
 .site-footer .footer-container {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.7fr) minmax(0, 0.7fr);
-  column-gap: clamp(2.5rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr) minmax(0, 0.7fr);
+  column-gap: clamp(2rem, 5vw, 5rem);
 
-  width: min(100% - var(--footer-gutter), var(--footer-max));
+  width: min(calc(100% - var(--footer-gutter)), var(--footer-max));
   margin: 0 auto;
-  padding: clamp(3.5rem, 6vw, 5.5rem) 0 clamp(3rem, 5vw, 4.5rem);
+
+  padding: 3.25rem 0 2.75rem;
 }
 
-
-/* ---------- MARCA ---------- */
+/* =========================================================
+   MARCA
+   ========================================================= */
 
 .site-footer .footer-brand {
-  max-width: 420px;
+  max-width: 430px;
 }
 
 .site-footer .footer-logo {
   display: inline-flex;
   align-items: baseline;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
+
   color: var(--footer-ink);
   font-family: var(--footer-font-display);
-  font-size: clamp(2.5rem, 3.4vw, 3rem);
+  font-size: clamp(2.5rem, 3.2vw, 2.85rem);
   font-weight: 600;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.045em;
   line-height: 1;
+
   text-decoration: none;
   transition: opacity 0.25s ease;
 }
@@ -93,24 +88,27 @@
   color: var(--footer-clay);
 }
 
-/* Mesma voz da assinatura da hero: Fraunces itálico */
 .site-footer .footer-tagline {
-  max-width: 20em;
+  max-width: 24em;
   margin: 0;
+
   color: var(--footer-ink-soft);
   font-family: var(--footer-font-display);
-  font-size: 1.2rem;
+  font-size: 1.22rem;
   font-style: italic;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.45;
+
   text-wrap: pretty;
 }
 
-
-/* ---------- CTA ---------- */
+/* =========================================================
+   CTA
+   Mantido conforme a versão aprovada
+   ========================================================= */
 
 .site-footer .footer-cta {
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
 }
 
 .site-footer .footer-cta-button {
@@ -118,17 +116,23 @@
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
+
   min-height: 3rem;
   padding: 0 1.4rem;
+
   border: 1px solid var(--footer-ink);
   border-radius: 999px;
+
   background: var(--footer-ink);
   color: var(--footer-bg);
+
   font-family: var(--footer-font-ui);
   font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+
   text-decoration: none;
+
   transition:
     background-color 0.25s ease,
     color 0.25s ease;
@@ -150,64 +154,77 @@
   transform: translateX(3px);
 }
 
+/* =========================================================
+   NAVEGAÇÃO
+   ========================================================= */
 
-/* ---------- NAVEGAÇÃO ---------- */
-
-/* Título de coluna: mesmo traço terracota do "eyebrow" da hero */
 .site-footer .footer-links h2 {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  margin: 0.6rem 0 1.35rem;
+
+  margin: 0.45rem 0 1rem;
+
   color: var(--footer-sage);
   font-family: var(--footer-font-ui);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1.2;
+  letter-spacing: 0.13em;
+  line-height: 1.3;
   text-transform: uppercase;
 }
 
 .site-footer .footer-links h2::before {
   content: '';
   flex-shrink: 0;
-  width: 1.4rem;
+
+  width: 1.35rem;
   height: 1px;
+
   background: var(--footer-clay);
 }
 
 .site-footer .footer-links nav ul {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.25rem;
+
   margin: 0;
   padding: 0;
+
   list-style: none;
 }
 
 .site-footer .footer-links nav a {
   position: relative;
   display: inline-block;
-  padding: 0.4rem 0;
+
+  padding: 0.35rem 0;
+
   color: var(--footer-ink-soft);
-  font-size: 0.95rem;
-  font-weight: 400;
-  line-height: 1.4;
+  font-size: 1rem;
+  font-weight: 450;
+  line-height: 1.45;
+
   text-decoration: none;
+
   transition: color 0.2s ease;
 }
 
-/* Sublinhado terracota que se desenha no hover */
 .site-footer .footer-links nav a::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: 0.2rem;
+  bottom: 0.15rem;
+
   width: 100%;
   height: 1px;
+
   background: var(--footer-clay);
+
   transform: scaleX(0);
   transform-origin: left;
+
   transition: transform 0.3s ease;
 }
 
@@ -219,7 +236,6 @@
   transform: scaleX(1);
 }
 
-
 /* =========================================================
    FAIXA INFERIOR
    ========================================================= */
@@ -230,26 +246,31 @@
   justify-content: space-between;
   gap: 1rem 2rem;
 
-  width: min(100% - var(--footer-gutter), var(--footer-max));
-  min-height: 5rem;
+  width: min(calc(100% - var(--footer-gutter)), var(--footer-max));
+  min-height: 4.25rem;
+
   margin: 0 auto;
-  padding: 0.75rem 0;
+  padding: 0.8rem 0;
+
   border-top: 1px solid var(--footer-line);
 }
 
 .site-footer .footer-bottom p {
   margin: 0;
+
   color: var(--footer-ink-soft);
-  font-size: 0.8rem;
-  line-height: 1.7;
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .site-footer .footer-bottom p a {
   color: var(--footer-ink);
   font-weight: 600;
+
   text-decoration: underline;
   text-decoration-color: var(--footer-line);
   text-underline-offset: 4px;
+
   transition: text-decoration-color 0.2s ease;
 }
 
@@ -257,24 +278,29 @@
   text-decoration-color: var(--footer-clay);
 }
 
-
-/* Botão: voltar ao topo */
+/* Voltar ao topo */
 
 .site-footer .footer-back-top {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.6rem 1.05rem;
+
+  padding: 0.65rem 1.05rem;
+
   border: 1px solid var(--footer-line);
   border-radius: 999px;
+
   background: transparent;
   color: var(--footer-ink);
+
   font-family: var(--footer-font-ui);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   line-height: 1;
+
   white-space: nowrap;
   cursor: pointer;
+
   transition: border-color 0.25s ease;
 }
 
@@ -286,9 +312,8 @@
   transform: translateY(-3px);
 }
 
-
 /* =========================================================
-   ACESSIBILIDADE — FOCO VISÍVEL
+   ACESSIBILIDADE
    ========================================================= */
 
 .site-footer a:focus-visible,
@@ -297,20 +322,17 @@
   outline-offset: 4px;
 }
 
-
 /* =========================================================
-   RESPONSIVIDADE
+   TABLET
    ========================================================= */
-
-
-/* Tablet */
 
 @media (max-width: 900px) {
   .site-footer .footer-container {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: 2.5rem;
-    row-gap: 2.75rem;
-    padding: 3.5rem 0 3rem;
+    row-gap: 2.25rem;
+
+    padding: 3rem 0 2.5rem;
   }
 
   .site-footer .footer-brand {
@@ -323,12 +345,13 @@
 
   .site-footer .footer-bottom {
     flex-wrap: wrap;
-    padding: 1.25rem 0;
+    padding: 1rem 0;
   }
 }
 
-
-/* Mobile */
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 560px) {
   .site-footer {
@@ -336,32 +359,47 @@
   }
 
   .site-footer .footer-container {
-    column-gap: 1.5rem;
-    row-gap: 2.5rem;
-    padding: 3rem 0 2.5rem;
+    column-gap: 1.25rem;
+    row-gap: 2rem;
+
+    padding: 2.5rem 0 2rem;
+  }
+
+  .site-footer .footer-logo {
+    font-size: 2.5rem;
   }
 
   .site-footer .footer-tagline {
-    font-size: 1.1rem;
+    max-width: 21em;
+    font-size: 1.12rem;
+  }
+
+  .site-footer .footer-links h2 {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
   }
 
   .site-footer .footer-links nav a {
-    font-size: 0.92rem;
+    font-size: 0.94rem;
   }
 
   .site-footer .footer-bottom {
     align-items: flex-start;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
+
     min-height: 0;
-    padding: 1.25rem 0 1.75rem;
+    padding: 1.2rem 0 1.5rem;
+  }
+
+  .site-footer .footer-bottom p {
+    font-size: 0.82rem;
   }
 
   .site-footer .footer-back-top {
-    margin-top: 0.5rem;
+    margin-top: 0.2rem;
   }
 }
-
 
 /* =========================================================
    MOVIMENTO REDUZIDO

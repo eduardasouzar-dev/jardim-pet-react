@@ -6,31 +6,23 @@ import './MundoPet.css'
 
 function MundoPet() {
   const [search, setSearch] = useState('')
-  const [selectedType, setSelectedType] = useState('Todos')
 
   const { products, loading, error } = useProducts()
 
-  const petProducts = products.filter((product) => {
-    const matchesCategory = product.category === 'pet'
-
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(search.toLowerCase())
-
-    const matchesType =
-      selectedType === 'Todos' || product.type === selectedType
-
-    return matchesCategory && matchesSearch && matchesType
-  })
-
-  const types = [
-    'Todos',
-    ...new Set(
-      products
-        .filter((product) => product.category === 'pet')
-        .map((product) => product.type)
-    ),
+  const sections = [
+    'Alimentação',
+    'Roupas e acessórios',
+    'Brinquedos',
+    'Conforto e descanso',
   ]
+
+  const petProducts = products.filter(
+    (product) => product.category === 'pet'
+  )
+
+  const filteredProducts = petProducts.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <main className="catalog-page">
@@ -58,41 +50,47 @@ function MundoPet() {
           />
         </div>
 
-        {!loading && !error && (
-          <div className="catalog-filters" aria-label="Filtrar por categoria">
-            {types.map((type) => (
-              <button
-                key={type}
-                type="button"
-                className={
-                  selectedType === type
-                    ? 'filter-button active'
-                    : 'filter-button'
-                }
-                onClick={() => setSelectedType(type)}
-                aria-pressed={selectedType === type}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-        )}
-
         {loading ? (
           <p>Carregando produtos...</p>
         ) : error ? (
           <p role="alert">{error}</p>
-        ) : petProducts.length > 0 ? (
-          <div className="product-grid">
-            {petProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
         ) : (
-          <p className="catalog-empty">
-            Nenhum produto encontrado. Tente outra busca ou categoria.
-          </p>
+          sections.map((section) => {
+            const sectionProducts = filteredProducts.filter(
+              (product) => product.type === section
+            )
+
+            if (sectionProducts.length === 0) {
+              return null
+            }
+
+            return (
+              <section className="catalog-category" key={section}>
+                <div className="catalog-category-header">
+                  <h2>{section}</h2>
+                  <span>{sectionProducts.length} produtos</span>
+                </div>
+
+                <div className="product-grid">
+                  {sectionProducts.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                    />
+                  ))}
+                </div>
+              </section>
+            )
+          })
         )}
+
+        {!loading &&
+          !error &&
+          filteredProducts.length === 0 && (
+            <p className="catalog-empty">
+              Nenhum produto encontrado. Tente outra busca.
+            </p>
+          )}
       </section>
     </main>
   )

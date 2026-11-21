@@ -4,33 +4,64 @@
    Identidade: Botanical Contemporary
    ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,20,1;1,9..144,400..700,20,1&family=Figtree:wght@400;500;600;700;800&display=swap');
+
 :root {
-  /* Cores principais */
+  /* Superfícies */
   --color-background: #F8F3E8;
+  --color-cream: #F8F3E8;
   --color-surface: #FFFCF5;
+  --color-white: #FFFFFF;
+  --color-sand: #EBE0CA;
+
+  /* Verdes e oliva */
   --color-olive: #7E9460;
   --color-olive-dark: #4B6340;
   --color-olive-deep: #38502F;
+  --color-natural-olive: #A6AD76;
+  --color-sage: #C3C69D;
+  --color-light-sage: #EEEBDD;
+  --color-forest: #4B6340;
+  --color-dark-green: #38502F;
 
-  /* Textos */
+  /* Tons quentes */
+  --color-accent: #D18A43;
+  --color-terracotta: #D18A43;
+  --color-orange: #D99A62;
+  --color-yellow: #E7C987;
+  --color-peach: #F1E3CD;
+
+  /* Textos e divisórias */
   --color-text: #2F3628;
+  --color-muted: #6B6F5C;
   --color-text-soft: #6B6F5C;
   --color-text-muted: #756C4E;
-
-  /* Detalhes */
-  --color-accent: #D18A43;
   --color-border: #DDD8C9;
 
-  /* Tipografia */
+  /* Compatibilidade com componentes antigos */
+  --verde: var(--color-forest);
+  --verde-escuro: var(--color-dark-green);
+  --verde-claro: var(--color-sage);
+  --creme: var(--color-cream);
+  --terracota: var(--color-terracotta);
+  --terracota-escuro: #B96F32;
+
+  /* Tipografia oficial */
   --font-display: 'Fraunces', Georgia, serif;
+  --font-heading: 'Fraunces', Georgia, serif;
   --font-body: 'Figtree', system-ui, sans-serif;
 
   /* Layout */
   --container-width: 1320px;
   --page-gutter: 5%;
+
+  /* Acabamentos */
   --radius-small: 8px;
   --radius-medium: 16px;
   --radius-large: 24px;
+
+  --shadow-soft: 0 4px 16px rgba(47, 54, 40, 0.08);
+  --shadow-medium: 0 8px 24px rgba(47, 54, 40, 0.12);
 
   /* Transições */
   --transition-fast: 180ms ease;

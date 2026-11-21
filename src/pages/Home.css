@@ -12,13 +12,18 @@
 
 .home {
   --home-bg: #F8F3E8;
+  --home-bg-pets: #F1EEDC;
   --home-ink: #2F3628;
   --home-ink-soft: #6B6F5C;
   --home-forest: #4B6340;
   --home-forest-deep: #38502F;
   --home-olive: #7E9460;
   --home-clay: #A85A30;
+  --home-clay-text: #94502B;   /* clay um pouco mais escuro, para texto pequeno (contraste) */
   --home-line: #E3DDCB;
+  --home-placeholder: #E4E0CE; /* cor de fundo enquanto a foto carrega */
+
+  --home-gutter: 3rem;         /* margem lateral total (soma dos dois lados) */
 
   --home-font-display: 'Fraunces', Georgia, serif;
   --home-font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -105,7 +110,7 @@
 .hero-content {
   position: relative;
   z-index: 2;
-  width: min(100% - 3rem, 1320px);
+  width: min(100% - var(--home-gutter), 1320px);
   margin: 0 auto;
   padding: 5rem 0;
 }
@@ -116,8 +121,7 @@
 .hero-eyebrow,
 .hero h1,
 .hero-description,
-.hero-secondary-link,
-.hero-signature {
+.hero-secondary-link {
   text-shadow: 0 0 22px rgba(248, 243, 232, 0.85);
 }
 
@@ -159,7 +163,6 @@
 }
 
 .hero-title-highlight {
-  position: relative;
   display: inline-block;
   color: var(--home-forest);
   font-style: italic;
@@ -247,7 +250,7 @@
 }
 
 
-/* Seta */
+/* Seta (usada na hero e nos links das seções) */
 
 .home-arrow {
   flex-shrink: 0;
@@ -259,227 +262,195 @@
 .hero-button:hover .home-arrow,
 .hero-button:focus-visible .home-arrow,
 .hero-secondary-link:hover .home-arrow,
-.hero-secondary-link:focus-visible .home-arrow {
+.hero-secondary-link:focus-visible .home-arrow,
+.home-feature-link:hover .home-arrow,
+.home-feature-link:focus-visible .home-arrow {
   transform: translateX(3px);
 }
 
 
-/* Assinatura */
-
-.hero-signature {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 3rem;
-  color: var(--home-ink-soft);
-  font-family: var(--home-font-display);
-  font-size: 1.15rem;
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.4;
-}
-
-.hero-signature-symbol {
-  flex-shrink: 0;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 0 100% 0 100%;
-  background: var(--home-olive);
-}
-
-
-/* Legenda da fotografia */
-
-.hero-image-caption {
-  position: absolute;
-  right: 2.5rem;
-  bottom: 4.5rem;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: #FFFDF7;
-  font-family: var(--home-font-ui);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
-}
-
-.caption-dot {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--home-bg);
-}
-
-
 /* =========================================================
-   SEGUNDA SEÇÃO — NOSSO JARDIM
-   Composição de duas imagens à esquerda + conteúdo editorial à direita
+   SEÇÕES DA HOME — PETS E JARDIM
+
+   Layout em grid com áreas nomeadas ("media" e "content").
+   No código, o texto sempre vem primeiro (leitura e tab);
+   no desktop, cada seção escolhe de que lado fica a imagem:
+   - Pets   → imagens à esquerda
+   - Jardim → imagens à direita (como a hero)
    ========================================================= */
 
-.home-intro {
+.home-feature {
+  --feature-bg: var(--home-bg);
+  --feature-areas: "content media";
+
+  padding: clamp(3.75rem, 8vw, 7rem) 0;
+  background: var(--feature-bg);
+}
+
+.home-feature--pets {
+  --feature-bg: var(--home-bg-pets);
+  --feature-areas: "media content";
+
+  /* Cinza do texto um pouco mais escuro só aqui, para manter o contraste sobre este fundo */
+  --home-ink-soft: #636850;
+}
+
+.home-feature--garden {
+  --feature-areas: "content media";
+}
+
+.home-feature-inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas: var(--feature-areas);
+  gap: clamp(2.5rem, 6vw, 6rem);
   align-items: center;
-  gap: clamp(3rem, 6vw, 6rem);
-
-  width: min(100% - 3rem, 1320px);
-  margin: 0 auto;
-  padding: clamp(4.5rem, 7vw, 6.5rem) 0;
+  width: min(100% - var(--home-gutter), 1320px);
+  margin-inline: auto;
 }
 
-
-/* Fotografias: duas imagens com a mesma altura, alinhadas no topo e na base.
-   A diferença de largura é o único contraste, então lê como decisão de layout. */
-
-.home-intro-media {
-  --media-h: clamp(300px, 33vw, 430px);
-
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  gap: clamp(0.75rem, 1.6vw, 1.25rem);
-  width: 100%;
-  max-width: 560px;
-  height: var(--media-h);
-}
-
-.home-intro-image-wrap {
-  position: relative;
-  overflow: hidden;
-  background: #E9E7D9;
-  border: 1px solid var(--home-line);
-  border-radius: 2px;
-}
-
-/* Composição editorial das fotografias */
-
-.home-intro-image-main {
-  height: 100%;
-}
-
-.home-intro-image-secondary {
-  align-self: center;
-  height: 86%;
-}
-
-/* Sansevieria: ajuste o foco aqui se o regador ou as mãos forem cortados */
-.home-intro-image-main .home-intro-image {
-  object-position: 55% 60%;
-}
-
-.home-intro-image {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.7s ease;
-}
-
-.home-intro-image-wrap:hover .home-intro-image {
-  transform: scale(1.025);
-}
-
-
-/* Conteúdo */
-
-.home-intro-content {
-  align-self: center;
-  max-width: 540px;
-}
-
-
-/* Rótulo */
-
-.home-intro-label {
-  display: inline-block;
-  margin-bottom: 1.35rem;
-  color: var(--home-forest);
-  font-family: var(--home-font-ui);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-
-/* Título */
-
-.home-intro-content h2 {
-  margin: 0;
-  color: var(--home-ink);
-  font-family: var(--home-font-display);
-  font-size: clamp(2.7rem, 4.2vw, 3.65rem);
-  font-weight: 450;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-
-.home-intro-content h2 em {
-  color: var(--home-forest);
-  font-style: italic;
-  font-weight: 450;
+.home-feature-content {
+  grid-area: content;
 }
 
 
 /* Texto */
 
-.home-intro-content p {
+.home-feature-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.3rem;
+  color: var(--home-forest);
+  font: 600 0.72rem/1.4 var(--home-font-ui);
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.home-feature-label::before {
+  content: '';
+  width: 1.7rem;
+  height: 1px;
+  background: var(--home-clay);
+}
+
+.home-feature h2 {
+  margin: 0;
+  color: var(--home-ink);
+  font: 450 clamp(2.8rem, 4.5vw, 4.5rem)/1.08 var(--home-font-display);
+  letter-spacing: -0.035em;
+}
+
+.home-feature h2 em {
+  color: var(--home-forest);
+  font-weight: 450;
+}
+
+.home-feature--pets h2 em {
+  color: var(--home-clay);
+}
+
+.home-feature p {
   max-width: 470px;
   margin: 1.5rem 0 0;
   color: var(--home-ink-soft);
-  font-family: var(--home-font-ui);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.8;
+  font: 400 1rem/1.8 var(--home-font-ui);
   text-wrap: pretty;
 }
 
 
-/* Link da seção */
+/* Link da seção — área de toque maior sem mudar a posição visual do texto */
 
-.home-intro-cta {
+.home-feature-link {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  margin-top: 1.8rem;
-  padding-bottom: 0.45rem;
-  border-bottom: 1px solid var(--home-forest);
+  margin-top: 1.3rem;
+  padding: 0.5rem 0 0.4rem;
+  border-bottom: 1px solid currentColor;
   color: var(--home-forest);
-  font-family: var(--home-font-ui);
-  font-size: 0.9rem;
-  font-weight: 600;
+  font: 600 0.92rem var(--home-font-ui);
   text-decoration: none;
-  transition:
-    color 0.25s ease,
-    border-color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
-.home-intro-cta:hover,
-.home-intro-cta:focus-visible {
-  color: var(--home-clay);
-  border-color: var(--home-clay);
+.home-feature-link:hover,
+.home-feature-link:focus-visible {
+  color: var(--home-clay-text);
 }
 
-.home-intro-cta:hover .home-arrow,
-.home-intro-cta:focus-visible .home-arrow {
-  transform: translateX(3px);
+
+/* Mídia (as fotos mantêm a composição atual; só as proporções passam a acompanhar a largura) */
+
+.home-pets-media,
+.home-garden-media {
+  grid-area: media;
+  position: relative;
+  aspect-ratio: 6 / 5;
+}
+
+.home-pets-photo,
+.home-garden-photo {
+  position: absolute;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--home-placeholder);
+}
+
+.home-pets-photo img,
+.home-garden-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* PETS */
+
+.home-pets-photo--dog {
+  inset: 0 22% 8% 0;
+  border-radius: 46% 46% 12px 12px;
+}
+
+.home-pets-photo--cat {
+  width: 42%;
+  height: 48%;
+  right: 0;
+  bottom: 0;
+  border: 7px solid var(--feature-bg);
+  border-radius: 48% 48% 14px 14px;
+}
+
+
+/* JARDIM */
+
+.home-garden-photo--main {
+  inset: 0 19% 11% 0;
+  border-radius: 12px 46% 12px 12px;
+}
+
+.home-garden-photo--main img {
+  object-position: 55% 60%;
+}
+
+.home-garden-photo--detail {
+  width: 43%;
+  height: 52%;
+  right: 0;
+  bottom: 0;
+  border: 7px solid var(--feature-bg);
+  border-radius: 46% 46% 12px 12px;
 }
 
 
 /* =========================================================
-   ACESSIBILIDADE — FOCO VISÍVEL
+   FOCO VISÍVEL
    ========================================================= */
 
+.home-feature-link:focus-visible,
 .hero-button:focus-visible,
-.hero-secondary-link:focus-visible,
-.home-intro-cta:focus-visible {
+.hero-secondary-link:focus-visible {
   outline: 2px solid var(--home-forest);
   outline-offset: 4px;
 }
@@ -489,61 +460,46 @@
    RESPONSIVIDADE
    ========================================================= */
 
-
-/* Notebook / tablet largo */
-
 @media (max-width: 1279px) {
-  .hero-visual {
-    --visual-w: 66%;
-  }
+  .hero-visual { --visual-w: 66%; }
 }
 
-
-/* Tablet */
-
+/* Tablet: a hero mantém o layout; o texto de apoio não avança sobre a foto */
 @media (max-width: 900px) {
-  .hero {
-    min-height: 600px;
-  }
+  .hero { min-height: 600px; }
+  .hero-visual { --visual-w: 62%; }
+  .hero h1 { font-size: clamp(2.7rem, 6vw, 3.7rem); }
+  .hero-description { max-width: min(370px, 42vw); }
+}
 
-  .hero-visual {
-    --visual-w: 62%;
-  }
+/* Tablet e celular: seções de pets e jardim em coluna única, texto primeiro */
+@media (max-width: 860px) {
+  .home-feature { --feature-areas: "content" "media"; }
 
-  .hero h1 {
-    font-size: clamp(2.7rem, 6vw, 3.7rem);
-  }
-
-  .hero-description {
-    max-width: 370px;
-  }
-
-  .home-intro {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  .home-feature-inner {
+    grid-template-columns: minmax(0, 1fr);
     gap: 2.5rem;
   }
 
-  .home-intro-content h2 {
-    font-size: clamp(2.5rem, 5vw, 3.2rem);
+  .home-feature h2 { font-size: clamp(2.6rem, 6.5vw, 3.4rem); }
+
+  .home-pets-media,
+  .home-garden-media {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4 / 3;
   }
+
+  /* Mantém a alternância: pets à esquerda, jardim à direita */
+  .home-garden-media { margin-inline-start: auto; }
 }
 
-
-/* Mobile */
-
 @media (max-width: 640px) {
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-    min-height: 0;
-  }
+  .home { --home-gutter: 2.5rem; }
 
-  .hero-content {
-    order: 1;
-    width: calc(100% - 2.5rem);
-    padding: 3.25rem 0 0;
-  }
-
+  /* Hero em coluna: texto em cima, foto embaixo */
+  .hero { flex-direction: column; align-items: stretch; min-height: 0; }
+  .hero-content { order: 1; padding: 3.25rem 0 0; }
   .hero-visual {
     position: relative;
     inset: auto;
@@ -553,128 +509,30 @@
     margin-top: -2.25rem;
     overflow: hidden;
   }
-
-  .hero-photo {
-    height: 100%;
-  }
-
   .hero-photo-pet {
-    right: 0;
-    width: 100%;
-
-    -webkit-mask-image: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(0, 0, 0, 0.25) 10%,
-      #000 28%,
-      #000 86%,
-      transparent 100%
-    );
-
-    mask-image: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(0, 0, 0, 0.25) 10%,
-      #000 28%,
-      #000 86%,
-      transparent 100%
-    );
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 10%, #000 28%, #000 86%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 10%, #000 28%, #000 86%, transparent 100%);
     -webkit-mask-composite: source-over;
     mask-composite: add;
   }
+  .hero-photo-pet .hero-image { object-position: 75% center; }
+  .hero h1 { max-width: 500px; font-size: clamp(2.6rem, 10.5vw, 3.4rem); }
+  .hero-description { max-width: 420px; font-size: 0.98rem; }
+  .hero-actions { gap: 0.9rem 1.5rem; margin-top: 1.5rem; }
+  .hero-button { min-height: 2.9rem; padding: 0 1.3rem; font-size: 0.86rem; }
+  .hero-secondary-link { font-size: 0.86rem; }
 
-  .hero-photo-pet .hero-image {
-    object-position: 75% center;
-  }
-
-  .hero h1 {
-    max-width: 500px;
-    font-size: clamp(2.6rem, 10.5vw, 3.4rem);
-  }
-
-  .hero-description {
-    max-width: 420px;
-    font-size: 0.98rem;
-  }
-
-  .hero-actions {
-    gap: 0.9rem 1.5rem;
-    margin-top: 1.5rem;
-  }
-
-  .hero-button {
-    min-height: 2.9rem;
-    padding: 0 1.3rem;
-    font-size: 0.86rem;
-  }
-
-  .hero-secondary-link {
-    font-size: 0.86rem;
-  }
-
-  .hero-signature {
-    margin-top: 1.5rem;
-    font-size: 1.05rem;
-  }
-
-  .hero-image-caption {
-    right: 1.25rem;
-    bottom: 3.25rem;
-    font-size: 0.68rem;
-  }
-
-
-  /* Segunda seção no mobile */
-
-  .home-intro {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    width: calc(100% - 2.5rem);
-    padding: 3.5rem 0 4.5rem;
-  }
-
-  .home-intro-media {
-    --media-h: clamp(240px, 72vw, 340px);
-    max-width: none;
-  }
-
-  .home-intro-content {
-    max-width: 100%;
-  }
-
-  .home-intro-label {
-    margin-bottom: 1rem;
-  }
-
-  .home-intro-content h2 {
-    font-size: clamp(2.6rem, 10vw, 3.4rem);
-  }
-
-  .home-intro-content p {
-    margin-top: 1.2rem;
-    font-size: 0.96rem;
-  }
-
-  .home-intro-cta {
-    margin-top: 1.5rem;
-  }
+  /* Pets e jardim */
+  .home-feature-inner { gap: 2rem; }
+  .home-feature h2 { font-size: clamp(2.7rem, 10vw, 3.5rem); }
+  .home-feature p { margin-top: 1.2rem; font-size: 0.96rem; }
+  .home-pets-media,
+  .home-garden-media { aspect-ratio: 1 / 1; }
 }
-
-
-/* =========================================================
-   MOVIMENTO REDUZIDO
-   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .hero-button,
   .hero-secondary-link,
   .home-arrow,
-  .home-intro-image,
-  .home-intro-cta {
-    transition: none;
-  }
-
-  .home-intro-image-wrap:hover .home-intro-image {
-    transform: none;
-  }
+  .home-feature-link { transition: none; }
 }
