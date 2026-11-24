@@ -14,9 +14,9 @@
   --home-bg: #F8F3E8;
   --home-bg-pets: #F1EEDC;
   /* Atmosfera botânica — tons complementares */
-  --home-apricot: #E4B68E;
-  --home-peach: #EDD3B7;
-  --home-warm-clay: #D49B70;
+  --home-apricot: #E6C0A0;
+  --home-peach: #F0DCC5;
+  --home-warm-clay: #DBAA86;
   --home-pine: #1F3A35;
   --home-botanical: #2F5A50;
   --home-ink: #2F3628;
@@ -295,9 +295,20 @@
 
 .home-feature--pets {
   --feature-areas: "media content";
+}
 
-  /* Cinza do texto um pouco mais escuro só aqui, para manter o contraste sobre este fundo */
-  --home-ink-soft: #636850;
+.home-feature--pets,
+.home-feature--garden {
+
+  /* Contraste local e transição do fundo */
+  --home-ink: #263B31;
+  --home-ink-soft: #35463B;
+  --home-forest: #35463B;
+  --home-clay: #35463B;
+  --home-clay-text: #263B31;
+  --pets-atmosphere: #F0E1D0;
+  --pets-fade: clamp(2rem, 3.5vw, 3rem);
+
   position: relative;
   isolation: isolate;
   padding-block: clamp(3.5rem, 5.5vw, 5rem);
@@ -315,6 +326,23 @@
   align-items: center;
   width: min(100% - var(--home-gutter), 1320px);
   margin-inline: auto;
+}
+
+@media (min-width: 861px) {
+  .home-feature--pets .home-feature-inner,
+  .home-feature--garden .home-feature-inner {
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  /* Jardim: aproxima as fotos do texto sem ampliar a composição. */
+  .home-feature--garden .home-feature-inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .home-feature--garden .home-garden-media {
+    width: 83.333333%;
+    justify-self: start;
+  }
 }
 
 .home-feature-content {
@@ -354,8 +382,10 @@
   font-weight: 450;
 }
 
-.home-feature--pets h2 em {
-  color: var(--home-clay);
+.home-feature--pets h2 em,
+
+.home-feature--garden h2 em {
+  color: var(--home-clay-text);
 }
 
 .home-feature p {
@@ -364,6 +394,36 @@
   color: var(--home-ink-soft);
   font: 400 1rem/1.8 var(--home-font-ui);
   text-wrap: pretty;
+}
+
+
+/* MUNDO PET — refinamento tipográfico */
+.home-feature--pets:not(.is-clareira) h2,
+.home-feature--garden h2 {
+  font-size: clamp(2.6rem, 4.1vw, 4.15rem);
+  line-height: 1.06;
+}
+
+.home-feature--pets:not(.is-clareira) p,
+
+.home-feature--garden p {
+  margin-top: 1.25rem;
+}
+
+.home-feature--pets .home-feature-label,
+
+.home-feature--garden .home-feature-label {
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.13em;
+}
+
+.home-feature--pets p,
+
+.home-feature--garden p {
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.75;
 }
 
 
@@ -387,6 +447,38 @@
   color: var(--home-clay-text);
 }
 
+
+/* CTA da seção pets: botão outline */
+.home-feature--pets .home-feature-link,
+.home-feature--garden .home-feature-link {
+  margin-top: 1.75rem;
+  padding: 0.8rem 1.5rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.home-feature--garden .home-feature-link:hover,
+.home-feature--pets .home-feature-link:hover,
+.home-feature--pets .home-feature-link:focus-visible,
+.home-feature--garden .home-feature-link:focus-visible {
+  background: var(--home-forest);
+  color: var(--home-bg);
+}
+
+.home-feature--garden .home-feature-link:hover,
+.home-feature--pets:not(.is-clareira) .home-feature-link:hover,
+.home-feature--pets:not(.is-clareira) .home-feature-link:focus-visible,
+.home-feature--garden .home-feature-link:focus-visible {
+  border-color: var(--home-forest);
+}
+
+.home-feature--pets.is-clareira .home-feature-link:hover,
+.home-feature--pets.is-clareira .home-feature-link:focus-visible {
+  color: var(--home-pine);
+}
 
 /* Mídia — base compartilhada */
 
@@ -414,44 +506,57 @@
 
 
 /* =========================================================
-   PETS — COMPOSIÇÃO FOTOGRÁFICA (proporções preservadas)
+   PETS — COMPOSIÇÃO FOTOGRÁFICA
    ========================================================= */
 
-.home-pets-media {
-  aspect-ratio: 1.4 / 1;
+.home-pets-media,
+.home-garden-media {
+  --dog-size: 66%;
+  --cat-size: 38%;
+
+  aspect-ratio: 1.25 / 1;
   isolation: isolate;
 }
 
-/* Configuração compartilhada das fotografias */
-.home-pets-photo {
+.home-pets-photo,
+.home-garden-photo {
   position: absolute;
   transform: none;
-  width: 55%;
   aspect-ratio: 1 / 1;
   height: auto;
-  border-radius: 24px;
-  border: 4px solid rgba(213, 192, 165, 0.85);
+  border-radius: 12px;
+  border: 2px solid #F3E7D5;
   box-shadow:
-    0 3px 8px rgba(67, 49, 32, 0.08),
-    0 10px 24px rgba(67, 49, 32, 0.06);
+    0 4px 12px rgba(67, 49, 32, 0.06),
+    0 16px 36px rgba(67, 49, 32, 0.10);
 }
 
-/* Fotografia — gato: mesma moldura e proporção do cachorro */
+.home-feature--pets.is-clareira .home-pets-photo {
+  border-radius: 24px;
+  border: 5px solid #F6EFE3;
+  box-shadow:
+    0 4px 10px rgba(67, 49, 32, 0.10),
+    0 18px 40px rgba(67, 49, 32, 0.20);
+}
+
+/* Gato: menor, rosto livre */
 .home-pets-photo--cat {
   z-index: 1;
   top: 0;
   left: 0;
+  width: var(--cat-size);
 }
 
 .home-pets-photo--cat img {
   object-position: 75% 40%;
 }
 
-/* Fotografia — cachorro */
+/* Cachorro: foto principal */
 .home-pets-photo--dog {
   z-index: 2;
   right: 0;
   bottom: 0;
+  width: var(--dog-size);
 }
 
 .home-pets-photo--dog img {
@@ -460,25 +565,26 @@
 
 
 /* =========================================================
-   MUNDO PET — ATMOSFERA QUENTE
-   Argila, damasco e creme. A máscara afeta apenas o fundo, nunca as fotos.
+   MUNDO PET — ATMOSFERA BOTÂNICA
+   Luz pêssego suave sobre o creme, concentrada atrás das fotos.
    ========================================================= */
 
-.home-feature--pets::before {
+.home-feature--pets::before,
+.home-feature--garden::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 65% 105% at 0% 48%,
-      var(--home-warm-clay) 0%, var(--home-apricot) 45%, transparent 100%),
-    linear-gradient(115deg,
-      var(--home-apricot) 0%, var(--home-peach) 55%, var(--home-apricot) 100%);
+    radial-gradient(ellipse 65% 90% at 12% 50%,
+      var(--pets-atmosphere) 0%, transparent 100%);
   -webkit-mask-image: linear-gradient(180deg,
-    transparent 0%, #000 18%, #000 78%, transparent 100%);
+    transparent 0%, #000 var(--pets-fade),
+      #000 calc(100% - var(--pets-fade)), transparent 100%);
   mask-image: linear-gradient(180deg,
-    transparent 0%, #000 18%, #000 78%, transparent 100%);
+    transparent 0%, #000 var(--pets-fade),
+      #000 calc(100% - var(--pets-fade)), transparent 100%);
 }
 
 /* =========================================================
@@ -516,24 +622,18 @@
 
 
 /* =========================================================
-   JARDIM — retrato principal + detalhe sobreposto,
-   composição serena com cantos em "folha" (assimétricos e discretos)
+   JARDIM — composição espelhada e atmosfera botânica
    ========================================================= */
-
-.home-garden-media {
-  aspect-ratio: 1 / 1;
-}
-
-.home-garden-photo {
-  position: absolute;
+.home-feature--garden::before {
+  background: radial-gradient(ellipse 65% 90% at 88% 50%,
+    var(--pets-atmosphere) 0%, transparent 100%);
 }
 
 .home-garden-photo--main {
-  top: 0;
-  right: 0;
-  width: 72%;
-  height: 86%;
-  border-radius: 28px 6px 28px 6px;
+  z-index: 2;
+  left: 0;
+  bottom: 0;
+  width: var(--dog-size);
 }
 
 .home-garden-photo--main img {
@@ -541,12 +641,10 @@
 }
 
 .home-garden-photo--detail {
-  left: 0;
-  bottom: 0;
-  width: 48%;
-  height: 44%;
-  border: 8px solid var(--feature-bg);   /* recorta a foto principal no tom da seção */
-  border-radius: 6px 22px 6px 22px;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  width: 46%;
 }
 
 
@@ -585,15 +683,21 @@
   .home-feature--garden { --feature-areas: "content" "media"; }
 
   /* A luz acompanha a nova ordem: texto acima, fotos abaixo. */
+  .home-feature--garden::before {
+    background: radial-gradient(ellipse 85% 48% at 80% 78%,
+      var(--pets-atmosphere) 0%, transparent 100%);
+  }
+
   .home-feature--pets:not(.is-clareira)::before {
     background:
-      radial-gradient(ellipse 82% 65% at 0% 76%,
-        var(--home-warm-clay) 0%, var(--home-apricot) 38%, transparent 100%),
-      linear-gradient(125deg, var(--home-peach) 0%, var(--home-apricot) 55%, var(--home-peach) 100%);
+      radial-gradient(ellipse 85% 48% at 20% 78%,
+        var(--pets-atmosphere) 0%, transparent 100%);
     -webkit-mask-image: linear-gradient(180deg,
-      transparent 0%, #000 12%, #000 85%, transparent 100%);
+      transparent 0%, #000 var(--pets-fade),
+      #000 calc(100% - var(--pets-fade)), transparent 100%);
     mask-image: linear-gradient(180deg,
-      transparent 0%, #000 12%, #000 85%, transparent 100%);
+      transparent 0%, #000 var(--pets-fade),
+      #000 calc(100% - var(--pets-fade)), transparent 100%);
   }
 
   .home-feature-inner {
@@ -602,6 +706,8 @@
   }
 
   .home-feature h2 { font-size: clamp(2.6rem, 6.5vw, 3.4rem); }
+  .home-feature--pets:not(.is-clareira) h2,
+  .home-feature--garden h2 { font-size: clamp(2.6rem, 6.5vw, 3.4rem); }
 
   .home-pets-media,
   .home-garden-media {
@@ -645,31 +751,36 @@
   .home-feature h2 { font-size: clamp(2.7rem, 10vw, 3.5rem); }
   .home-feature p { margin-top: 1.2rem; font-size: 0.96rem; }
 
-  .home-feature--pets:not(.is-clareira) { padding-block: 3rem; }
+  .home-feature--pets:not(.is-clareira),
+  .home-feature--garden { padding-block: 3rem; }
+  .home-feature--pets:not(.is-clareira) h2,
+  .home-feature--garden h2 { font-size: clamp(2.6rem, 9vw, 3.3rem); }
+  .home-feature--pets:not(.is-clareira) p,
+  .home-feature--garden p { margin-top: 1.2rem; font-size: 1rem; }
 
   .home-feature--pets.is-clareira {
     --pets-fade-top: 2rem;
     --pets-fade-bottom: 2.5rem;
   }
 
-  .home-pets-photo {
+  .home-pets-photo,
+  .home-garden-photo {
+    border-radius: 10px;
+    border-width: 2px;
+  }
+
+  .home-feature--pets.is-clareira .home-pets-photo {
     border-radius: 18px;
     border-width: 3px;
   }
 
-  .home-garden-photo--main {
-    border-radius: 22px 5px 22px 5px;
-  }
-
-  .home-garden-photo--detail {
-    border-width: 5px;
-    border-radius: 5px 18px 5px 18px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-button,
   .hero-secondary-link,
   .home-arrow,
-  .home-feature-link { transition: none; }
+  .home-feature-link,
+  .home-feature--pets .home-feature-link,
+  .home-feature--garden .home-feature-link { transition: none; }
 }
