@@ -13,6 +13,12 @@
 .home {
   --home-bg: #F8F3E8;
   --home-bg-pets: #F1EEDC;
+  /* Atmosfera botânica — tons complementares */
+  --home-apricot: #E4B68E;
+  --home-peach: #EDD3B7;
+  --home-warm-clay: #D49B70;
+  --home-pine: #1F3A35;
+  --home-botanical: #2F5A50;
   --home-ink: #2F3628;
   --home-ink-soft: #6B6F5C;
   --home-forest: #4B6340;
@@ -288,11 +294,13 @@
 }
 
 .home-feature--pets {
-  --feature-bg: var(--home-bg-pets);
   --feature-areas: "media content";
 
   /* Cinza do texto um pouco mais escuro só aqui, para manter o contraste sobre este fundo */
   --home-ink-soft: #636850;
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(3.5rem, 5.5vw, 5rem);
 }
 
 .home-feature--garden {
@@ -380,18 +388,17 @@
 }
 
 
-/* Mídia (as fotos mantêm a composição atual; só as proporções passam a acompanhar a largura) */
+/* Mídia — base compartilhada */
 
 .home-pets-media,
 .home-garden-media {
   grid-area: media;
   position: relative;
-  aspect-ratio: 6 / 5;
+  width: 100%;
 }
 
 .home-pets-photo,
 .home-garden-photo {
-  position: absolute;
   box-sizing: border-box;
   overflow: hidden;
   background: var(--home-placeholder);
@@ -406,28 +413,127 @@
 }
 
 
-/* PETS */
+/* =========================================================
+   PETS — COMPOSIÇÃO FOTOGRÁFICA (proporções preservadas)
+   ========================================================= */
 
-.home-pets-photo--dog {
-  inset: 0 22% 8% 0;
-  border-radius: 46% 46% 12px 12px;
+.home-pets-media {
+  aspect-ratio: 1.4 / 1;
+  isolation: isolate;
 }
 
+/* Configuração compartilhada das fotografias */
+.home-pets-photo {
+  position: absolute;
+  transform: none;
+  width: 55%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  border-radius: 24px;
+  border: 4px solid rgba(213, 192, 165, 0.85);
+  box-shadow:
+    0 3px 8px rgba(67, 49, 32, 0.08),
+    0 10px 24px rgba(67, 49, 32, 0.06);
+}
+
+/* Fotografia — gato: mesma moldura e proporção do cachorro */
 .home-pets-photo--cat {
-  width: 42%;
-  height: 48%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.home-pets-photo--cat img {
+  object-position: 75% 40%;
+}
+
+/* Fotografia — cachorro */
+.home-pets-photo--dog {
+  z-index: 2;
   right: 0;
   bottom: 0;
-  border: 7px solid var(--feature-bg);
-  border-radius: 48% 48% 14px 14px;
+}
+
+.home-pets-photo--dog img {
+  object-position: 50% 40%;
 }
 
 
-/* JARDIM */
+/* =========================================================
+   MUNDO PET — ATMOSFERA QUENTE
+   Argila, damasco e creme. A máscara afeta apenas o fundo, nunca as fotos.
+   ========================================================= */
+
+.home-feature--pets::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 105% at 0% 48%,
+      var(--home-warm-clay) 0%, var(--home-apricot) 45%, transparent 100%),
+    linear-gradient(115deg,
+      var(--home-apricot) 0%, var(--home-peach) 55%, var(--home-apricot) 100%);
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%, #000 18%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%, #000 18%, #000 78%, transparent 100%);
+}
+
+/* =========================================================
+   VARIANTE B — CLAREIRA
+   Adicione is-clareira à classe da seção no Home.jsx.
+   Faixas de transição com altura fixa em relação ao padding:
+   todo o conteúdo permanece sobre a área verde opaca.
+   ========================================================= */
+
+.home-feature--pets.is-clareira {
+  --pets-fade-top: clamp(2rem, 3.5vw, 3rem);
+  --pets-fade-bottom: clamp(2.75rem, 5vw, 4rem);
+  --home-ink: #F8F3E8;
+  --home-ink-soft: #D8E2D4;
+  --home-forest: #C8DDBF;
+  --home-clay: #E8B38D;
+  --home-clay-text: #F0C5A5;
+  padding-block:
+    calc(var(--pets-fade-top) + 1.5rem)
+    calc(var(--pets-fade-bottom) + 1.5rem);
+}
+
+.home-feature--pets.is-clareira::before {
+  background:
+    radial-gradient(ellipse 85% 120% at 8% 28%,
+      var(--home-botanical) 0%, transparent 72%),
+    linear-gradient(125deg, #294B41 0%, var(--home-pine) 48%, #172F2A 100%);
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent 0%, #000 var(--pets-fade-top),
+    #000 calc(100% - var(--pets-fade-bottom)), transparent 100%);
+  mask-image: linear-gradient(180deg,
+    transparent 0%, #000 var(--pets-fade-top),
+    #000 calc(100% - var(--pets-fade-bottom)), transparent 100%);
+}
+
+
+/* =========================================================
+   JARDIM — retrato principal + detalhe sobreposto,
+   composição serena com cantos em "folha" (assimétricos e discretos)
+   ========================================================= */
+
+.home-garden-media {
+  aspect-ratio: 1 / 1;
+}
+
+.home-garden-photo {
+  position: absolute;
+}
 
 .home-garden-photo--main {
-  inset: 0 19% 11% 0;
-  border-radius: 12px 46% 12px 12px;
+  top: 0;
+  right: 0;
+  width: 72%;
+  height: 86%;
+  border-radius: 28px 6px 28px 6px;
 }
 
 .home-garden-photo--main img {
@@ -435,12 +541,12 @@
 }
 
 .home-garden-photo--detail {
-  width: 43%;
-  height: 52%;
-  right: 0;
+  left: 0;
   bottom: 0;
-  border: 7px solid var(--feature-bg);
-  border-radius: 46% 46% 12px 12px;
+  width: 48%;
+  height: 44%;
+  border: 8px solid var(--feature-bg);   /* recorta a foto principal no tom da seção */
+  border-radius: 6px 22px 6px 22px;
 }
 
 
@@ -474,7 +580,21 @@
 
 /* Tablet e celular: seções de pets e jardim em coluna única, texto primeiro */
 @media (max-width: 860px) {
-  .home-feature { --feature-areas: "content" "media"; }
+  .home-feature,
+  .home-feature--pets,
+  .home-feature--garden { --feature-areas: "content" "media"; }
+
+  /* A luz acompanha a nova ordem: texto acima, fotos abaixo. */
+  .home-feature--pets:not(.is-clareira)::before {
+    background:
+      radial-gradient(ellipse 82% 65% at 0% 76%,
+        var(--home-warm-clay) 0%, var(--home-apricot) 38%, transparent 100%),
+      linear-gradient(125deg, var(--home-peach) 0%, var(--home-apricot) 55%, var(--home-peach) 100%);
+    -webkit-mask-image: linear-gradient(180deg,
+      transparent 0%, #000 12%, #000 85%, transparent 100%);
+    mask-image: linear-gradient(180deg,
+      transparent 0%, #000 12%, #000 85%, transparent 100%);
+  }
 
   .home-feature-inner {
     grid-template-columns: minmax(0, 1fr);
@@ -485,9 +605,7 @@
 
   .home-pets-media,
   .home-garden-media {
-    width: 100%;
-    max-width: 600px;
-    aspect-ratio: 4 / 3;
+    max-width: 560px;
   }
 
   /* Mantém a alternância: pets à esquerda, jardim à direita */
@@ -526,8 +644,27 @@
   .home-feature-inner { gap: 2rem; }
   .home-feature h2 { font-size: clamp(2.7rem, 10vw, 3.5rem); }
   .home-feature p { margin-top: 1.2rem; font-size: 0.96rem; }
-  .home-pets-media,
-  .home-garden-media { aspect-ratio: 1 / 1; }
+
+  .home-feature--pets:not(.is-clareira) { padding-block: 3rem; }
+
+  .home-feature--pets.is-clareira {
+    --pets-fade-top: 2rem;
+    --pets-fade-bottom: 2.5rem;
+  }
+
+  .home-pets-photo {
+    border-radius: 18px;
+    border-width: 3px;
+  }
+
+  .home-garden-photo--main {
+    border-radius: 22px 5px 22px 5px;
+  }
+
+  .home-garden-photo--detail {
+    border-width: 5px;
+    border-radius: 5px 18px 5px 18px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

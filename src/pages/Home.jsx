@@ -45,25 +45,64 @@ function Home() {
         </div>
       </section>
 
-      {/* 02 — PETS (imagens à esquerda no desktop; texto sempre vem primeiro no código) */}
-      <section className="home-feature home-feature--pets" aria-labelledby="home-pets-title">
-        <div className="home-feature-inner">
-          <div className="home-feature-content">
-            <span className="home-feature-label">Feito para eles, com carinho</span>
-            <h2 id="home-pets-title">Mais amor,<br />mais bagunça,<br /><em>mais vida!</em></h2>
-            <p>Para os companheiros que transformam a rotina em momentos especiais. Cuidado, conforto e diversão para quem faz parte da família.</p>
-            <Link to="/mundo-pet" className="home-feature-link">Explore o Mundo Pet <ArrowIcon /></Link>
-          </div>
-          <div className="home-pets-media">
-            <div className="home-pets-photo home-pets-photo--dog">
-              <img src="/images/home-pet-cachorro.jpg" alt="Cachorro descansando e brincando em casa" loading="lazy" decoding="async" />
-            </div>
-            <div className="home-pets-photo home-pets-photo--cat">
-              <img src="/images/home-pet-gato.jpg" alt="Gato curioso em um ambiente acolhedor" loading="lazy" decoding="async" />
-            </div>
-          </div>
-        </div>
-      </section>
+    
+{/* 02 — PETS (imagens à esquerda no desktop; texto primeiro no código) */}
+<section
+  className="home-feature home-feature--pets"
+  aria-labelledby="home-pets-title"
+>
+  <div className="home-feature-inner">
+
+    {/* Conteúdo da seção */}
+    <div className="home-feature-content">
+      <span className="home-feature-label">
+        Feito para eles, com carinho
+      </span>
+
+      <h2 id="home-pets-title">
+        Mais amor,<br />
+        mais bagunça,<br />
+        <em>mais vida!</em>
+      </h2>
+
+      <p>
+        Para os companheiros que transformam a rotina em momentos
+        especiais. Cuidado, conforto e diversão para quem faz
+        parte da família.
+      </p>
+
+      <Link to="/mundo-pet" className="home-feature-link">
+        Explore o Mundo Pet <ArrowIcon />
+      </Link>
+    </div>
+
+    {/* Composição fotográfica */}
+    <div className="home-pets-media">
+
+      {/* Gato — fotografia principal, maior */}
+      <div className="home-pets-photo home-pets-photo--cat">
+        <img
+          src="/images/gato-laranja-acolhedor-v3.jpg"
+          alt="Gatinho laranja"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      {/* Cachorro — fotografia secundária, menor e sobreposta */}
+      <div className="home-pets-photo home-pets-photo--dog">
+        <img
+          src="/images/cachorro-marrom-e-branco.jpg"
+          alt="Cachorro marrom e branco"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
       {/* 03 — JARDIM (imagens à direita no desktop) */}
       <section className="home-feature home-feature--garden" aria-labelledby="home-garden-title">
